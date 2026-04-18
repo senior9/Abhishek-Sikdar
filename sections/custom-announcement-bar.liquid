@@ -1,73 +1,202 @@
-<section class="custom-announcement-bar" style="
-    background-color: {{ section.settings.bg_color }}; 
+<section
+  class="custom-announcement-bar"
+  style="
+    background-color: {{ section.settings.bg_color }};
     padding:{{ section.settings.padding_vertical }}px {{ section.settings.padding_horizontal }}px;
-    font-family: {{ section.settings.font_family }}; 
-    ">
-    <div class="custom-announcement">
-        <!-- left text -->
-        <div class="custom-announcement-left">
-            {% if section.settings.logo_image != blank %}
-            <img
-                width="150"
-                height="auto"
-                src="{{ section.settings.logo_image | image_url }}"
-                alt="Announcement Logo"
-                class="custom-announcement-logo"
-                loading="lazy">
+    font-family: {{ section.settings.font_family }};
+  "
+>
+  <div class="custom-announcement-container">
+    <!-- left text -->
+    <div class="custom-announcement-left">
+      {% if section.settings.logo_image != blank %}
+        <img
+          width="150"
+          height="auto"
+          src="{{ section.settings.logo_image | image_url }}"
+          alt="Announcement Logo"
+          class="custom-announcement-logo"
+          loading="lazy"
+        >
 
-            {% else %}
-                <p class="custom-announcement-logo-text" style="
-                    color: {{ section.settings.custom_announcement_text }}
-                    font-size: {{ section.settings.custom_announcement_text_size }}px;
-                    margin: 0;
-                    font-weight:700;
-                    ">
-                    {{ section.settings.custom_announcement_logo }}
-
-                </p>
-            {% endif %}
-
-        </div>
-        <!-- center text -->
-        <div class="custom-announcement-center">
-            <p class="custom-announcement-text" style="
-                color: {{ section.settings.custom_announcement_text_color }};
-                font-size: {{ section.settings.custom_announcement_text_size }}px;
-                margin: 0;
-                ">
-                {{ section.settings.announcement_text }}
-            </p>
-        </div>
-
-        <!-- right text -->
-        <div class="custom-announcement-btn-wrapper">
-            <button 
-            id=""
-            class="custom-announcement-btn"
-
-            >
-                <span class="custom-announcement-btn-text">
-                    CHOOSE GIFT
-                </span>
-                <span class="custom-announcement-btn-arrow">
-                    <svg width="27" height="12" viewBox="0 0 27 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="#333333"/>
-                </svg>
-
-                </span>
-
-
-            </button>
-
-
-        </div>
-
+      {% else %}
+        <p
+          class="custom-announcement-logo-text"
+          style="
+            color: {{ section.settings.custom_announcement_text }}
+            font-size: {{ section.settings.custom_announcement_text_size }}px;
+            margin: 0;
+            font-weight:700;
+          "
+        >
+          {{ section.settings.custom_announcement_logo }}
+        </p>
+      {% endif %}
+    </div>
+    <!-- center text -->
+    <div class="custom-announcement-center">
+      <p
+        class="custom-announcement-center_text"
+        style="
+          color: {{ section.settings.custom_announcement_center_text_color }};
+          font-size: {{ section.settings.custom_announcement_center_text_size }}px;
+          margin: 0;
+        "
+      >
+        {{ section.settings.custom_announcement_center_text }}
+      </p>
     </div>
 
+    <!-- right text -->
+    <div class="custom-announcement-btn-wrapper">
+      <button
+        id="custom-announcement-btn"
+        data-link="{{ section.settings.button_link }}"
+        class="custom-announcement-btn"
+      >
+        <span class="custom-announcement-btn-text"> CHOOSE GIFT </span>
+        <span class="custom-announcement-btn-arrow">
+          <svg width="27" height="12" viewBox="0 0 27 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="#333333"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
 </section>
 
+<style>
+:root{
+--btn-width: 207px;
+--btn-height: 44px;
+--btn-background-color:  rgba(255, 245, 68, 1);
+--btn-text-color: black;
+--btn-arrow-width: 24px;
+
+}
+
+.custom-announcement-bar {
+ width: 100%;
+ height:64px
+}
+.custom-announcement-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.custom-announcement-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.custom-announcement-center {
+  flex: 1;
+  text-align: center;
+}
+.custom-announcement-btn-wrapper {
+  display: flex;
+  align-items: center;
+}
+.custom-announcement-btn {
+position: relative;
+width: var(--btn-width);
+height: var(--btn-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--btn-background-color);
+  color: var(--btn-text-color);
+  padding: {{ section.settings.button_padding_vertical }}px {{ section.settings.button_padding_horizontal }}px;
+  font-size: {{ section.settings.button_text_size }}px;
+  border: none !important;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 4px;
+  font-weight: 700;
+  overflow: hidden;
+
+}
+.custom-announcement-btn::before {
+  top: 0;
+  content: "";
+  position: absolute;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: var(--btn-text-color);
+  z-index: 0;
+  transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
+}
+.custom-announcement-btn:hover::before {
+  left: 0;
+}
+.custom-announcement-btn-text, .custom-announcement-btn-arrow {
+  position: relative;
+  z-index: 1;
+  transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
+}
+.custom-announcement-btn:hover .custom-announcement-btn-text, .custom-announcement-btn:hover .custom-announcement-btn-arrow {
+  color: white;
+}
+
+.custom-announcement-btn-arrow{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--btn-arrow-width)!important; 
+  flex-shrink: 0;
+}
+.custom-announcement-btn-arrow svg path {
+  stroke: currentColor;
+  transition: stroke 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
+}
+
+@media (max-width: 768px) {
+  .custom-announcement-container {
+    flex-direction: column;
+    gap: 10px;
+    height: auto;
+  }
+  .custom-announcement-center {
+    order: 3;
+    position:static;
+    transform: none;
+    pointer-events: auto;
+  }
+  .custom-announcement-btn-wrapper {
+    order: 2;
+  }
+  .custom-announcement-left {
+    order: 1;
+  }
+  .custom-announcement-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+}
+</style>
 
 
+<script>
+ document.addEventListener('DOMContentLoaded', function(){
+const button = document.querySelector('[data-button-id="custom_announcement_btn"]');
+if(!button) return;
+button.addEventListener('click', function(){
+  const link = '{{ section.settings.button_link }}';
+  if(link){
+    window.location.href = link;
+  }
+});
+});
+
+</script>
 
 {% schema %}
 {
@@ -75,9 +204,136 @@
   "settings": [
     {
       "type": "text",
-      "id": "announcement_text",
-      "label": "Announcement text",
+      "id": "custom_announcement_logo",
+      "label": "Logo text",
       "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "custom_announcement_text",
+      "label": "Logo text color",
+      "default": "#333333"
+    },
+    {
+      "type": "text",
+      "id": "custom_announcement_center_text",
+      "label": "Center text",
+      "default": "Find the ideal gift for your loved ones"
+    },
+    {
+      "type": "text",
+      "id": "custom_announcement_center_text_color",
+      "label": "Center text color",
+      "default": "#333333"
+    },
+    {
+      "type": "text",
+      "id": "font_family",
+      "label": "Font family",
+      "default": "Arial, sans-serif"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "number",
+      "id": "padding_vertical",
+      "label": "Vertical padding (px)",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "id": "padding_horizontal",
+      "label": "Horizontal padding (px)",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "custom_announcement_text_size",
+      "label": "Logo text size (px)",
+      "default": 16
+    },
+    {
+      "type": "number",
+      "id": "custom_announcement_center_text_size",
+      "label": "Center text size (px)",
+      "default": 16
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "text",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "#"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "CHOOSE GIFT"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "number",
+      "id": "button_padding_vertical",
+      "label": "Button vertical padding (px)",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "id": "button_padding_horizontal",
+      "label": "Button horizontal padding (px)",
+      "default": 20
+    },
+    {
+      "type": "number",
+      "id": "button_text_size",
+      "label": "Button text size (px)",
+      "default": 14
+    },
+        {
+        "type": "number",
+        "id": "button_arrow_width",
+        "label": "Button arrow width (px)",
+        "default": 24
+        },
+    
+        {
+        "type": "number",
+        "id": "button_width",
+        "label": "Button width (px)",
+        "default": 207
+        },
+        {
+        "type": "number",
+        "id": "button_height",
+        "label": "Button height (px)",
+        "default": 40
+        }
+
+  ],
+  "presets": [
+    {
+      "name": "Custom announcement bar",
+      "category": "Announcement"
     }
   ]
 }
