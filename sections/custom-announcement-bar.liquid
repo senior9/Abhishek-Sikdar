@@ -1,0 +1,84 @@
+<section class="custom-announcement-bar" style="
+    background-color: {{ section.settings.bg_color }}; 
+    padding:{{ section.settings.padding_vertical }}px {{ section.settings.padding_horizontal }}px;
+    font-family: {{ section.settings.font_family }}; 
+    ">
+    <div class="custom-announcement">
+        <!-- left text -->
+        <div class="custom-announcement-left">
+            {% if section.settings.logo_image != blank %}
+            <img
+                width="150"
+                height="auto"
+                src="{{ section.settings.logo_image | image_url }}"
+                alt="Announcement Logo"
+                class="custom-announcement-logo"
+                loading="lazy">
+
+            {% else %}
+                <p class="custom-announcement-logo-text" style="
+                    color: {{ section.settings.custom_announcement_text }}
+                    font-size: {{ section.settings.custom_announcement_text_size }}px;
+                    margin: 0;
+                    font-weight:700;
+                    ">
+                    {{ section.settings.custom_announcement_logo }}
+
+                </p>
+            {% endif %}
+
+        </div>
+        <!-- center text -->
+        <div class="custom-announcement-center">
+            <p class="custom-announcement-text" style="
+                color: {{ section.settings.custom_announcement_text_color }};
+                font-size: {{ section.settings.custom_announcement_text_size }}px;
+                margin: 0;
+                ">
+                {{ section.settings.announcement_text }}
+            </p>
+        </div>
+
+        <!-- right text -->
+        <div class="custom-announcement-btn-wrapper">
+            <button 
+            id=""
+            class="custom-announcement-btn"
+
+            >
+                <span class="custom-announcement-btn-text">
+                    CHOOSE GIFT
+                </span>
+                <span class="custom-announcement-btn-arrow">
+                    <svg width="27" height="12" viewBox="0 0 27 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="#333333"/>
+                </svg>
+
+                </span>
+
+
+            </button>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+{% schema %}
+{
+  "name": " Custom announcement bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "TISSO VISON"
+    }
+  ]
+}
+{% endschema %}

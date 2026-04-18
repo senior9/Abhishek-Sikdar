@@ -1,0 +1,142 @@
+<section class="custom-banner" style="padding: {{ section.settings.section_pading }}px 0;">
+  <div class="custom-banner-container">
+    <!-- left Main title -->
+    <div class="custom-banner-content" style="padding:0 {{  section.settings.content_padding }}px;">
+      <h1
+        class="custom-banner-title"
+        style="color: {{ section.settings.banner_text_color }}; font-size: {{ section.settings.banner_text_size }}px;"
+      >
+        {{ section.settings.banner_text }}
+      </h1>
+      <p
+        class="custom-banner-description"
+        style="color: {{ section.settings.banner_description_color }}; font-size: {{ section.settings.banner_description_size }}px;"
+      >
+        {{ section.settings.banner_description }}
+      </p>
+      <button
+        class="custom-banner-btn"
+        data-btn-id="custom-banner-btn"
+        style="
+          background-color: {{ section.settings.btn_bg_color }};
+          color: {{ section.settings.btn_text_color }};
+          font-size: {{ section.settings.btn_text_size }}px;
+          padding: {{ section.settings.btn_padding_y }}px {{ section.settings.btn_padding_x }}px;
+          border:{{ section.settings.btn_border_width }}px solid {{ section.settings.btn_border_color }};
+          font-weight: {{ section.settings.btn_font_weight }};
+          letter-spacing: {{ section.settings.btn_letter_spacing }}px;
+          font-family: {{ section.settings.btn_font_family }};
+        "
+      >
+        {{ section.settings.btn_text }}
+        <span class="btn-arrow">
+          {{ section.settings.btn_arrow_icon }}
+        </span>
+      </button>
+    </div>
+    <!-- right text -->
+
+    <div class="custom-banner-visual" style="padding:0 {{ section.settings.content_padding }} px;">
+      { % if section.settings.visual_image % }
+      <img
+        width=""
+        height=""
+        src="{{ section.settings.visual_image | image_url}}"
+        alt="banner Visual"
+        class="custom-banner-image"
+        loading="lazy"
+      >
+      { % else % }
+      <div
+        class="custom-banner-visual-placeholder"
+        style="background-color:{{ section.settings.placeholder_bg_color }};"
+      >
+        <p>Add an Visual image</p>
+      </div>
+      { % endif % }
+    </div>
+  </div>
+</section>
+
+<style>
+    .custom-banner {
+        width: 100%;
+        background-color: {{ section.settings.section_bg_color }};
+    }
+    .custom-banner-container{
+    max-width:1400PX;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:{{ section.settings.grid_gap }}px;
+    }
+    .custom-banner-content{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  }
+  .custom-banner-title{
+  margin:0 0 20px 0;
+  line-height:1.6;
+  max-width:600px;
+  }
+  .custom-banner-description{
+  margin:0 0 30px 0;
+  line-height:1.5;
+  max-width:600px;
+  }
+  .custom-banner-btn{
+  cursor:pointer;
+  border-radius: {{ section.settings.btn_border_radius }}px;
+  transition: all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  white-space: nowrap;
+  width:fit-content;
+  }
+
+  .custom-banner.btn .btn-arrow{
+  display:inline-block;
+  transition: transform 0.3s ease;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Custom banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_text",
+      "label": "Main title",
+      "default": "Custom banner"
+    },
+    {
+      "type": "text",
+      "id": "banner_description",
+      "label": "Description",
+      "default": "This is a custom banner section. You can add your own text and customize the design."
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "image_picker",
+      "id": "visual_image",
+      "label": "Visual image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom banner"
+    }
+  ]
+}
+{% endschema %}
