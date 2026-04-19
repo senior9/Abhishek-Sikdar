@@ -1,0 +1,310 @@
+<section class="custom-featured-products">
+  <div class="custom-feature-products-container">
+    <div class="custom-featured-products-header">
+      <h2 class="custom-featured-products-title">
+        {{ section.settings.custom_featured_products_title }}
+      </h2>
+    </div>
+
+    {% if section.blocks.size == 0 %}
+      <div class="custom-featured-products-empty">
+        <p>No products added yet</p>
+      </div>
+    {% else %}
+      <div class="custom-featured-products-grid">
+        {% for block in section.blocks %}
+          {% assign product = block.settings.product %}
+
+          {%- comment -%} Auto-detect colors {%- endcomment -%}
+          {% assign product_colors = '' %}
+          {% if product != blank %}
+            {% for option in product.options_with_values %}
+              {% assign opt_lower = option.name | downcase | strip %}
+              {% assign found = false %}
+              {% if opt_lower == 'color' or opt_lower == 'colour' or opt_lower == 'colors' or opt_lower == 'colours' -%}
+                {%- assign found = true -%}
+              {%- endif %}
+              {% if opt_lower == 'couleur'
+                or opt_lower == 'farbe'
+                or opt_lower == 'colore'
+              -%}
+                {%- assign found = true -%}
+              {%- endif %}
+              {% if opt_lower contains 'color' or opt_lower contains 'colour' %}{% assign found = true %}{% endif %}
+              {% if found %}{% assign product_colors = option.values | join: ',' %}{% endif %}
+            {% endfor %}
+            {% if product_colors == '' and product.options_with_values.size > 0 %}
+              {% assign first_opt = product.options_with_values[0] %}
+              {% assign product_colors = first_opt.values | join: ',' %}
+            {% endif %}
+          {% endif %}
+
+          {%- comment -%} Auto-detect sizes {%- endcomment -%}
+          {% assign product_sizes = '' %}
+          {% if product != blank %}
+            {% for option in product.options_with_values %}
+              {% assign opt_lower = option.name | downcase | strip %}
+              {% if opt_lower == 'size' or opt_lower == 'sizes' or opt_lower == 'taille' %}
+                {% assign product_sizes = option.values | join: ',' %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+          {%- comment -%} Override wins over auto-detect {%- endcomment -%}
+          {% assign final_colors = block.settings.override_colors | default: product_colors %}
+          {% assign final_sizes = block.settings.override_sizes | default: product_sizes %}
+
+          {% assign display_image = block.settings.custom_image | default: product.featured_image %}
+
+          <div
+            class="product-card"
+            {{ block.shopify_attributes }}
+            data-product-id="{{ product.id }}"
+            data-product-name="{{ product.title | default: 'Example Product' | escape }}"
+            data-product-price="{{ product.price | money | default: '$0.00' }}"
+            data-product-description="{{ product.description | strip_html | escape }}"
+            data-product-colors="{{ final_colors }}"
+            data-product-sizes="{{ final_sizes }}"
+          >
+            <div class="product-card-image-wrapper">
+              {% if display_image %}
+                <img
+                  width="500"
+                  height="500"
+                  src="{{ display_image | image_url: width: 500 }}"
+                  alt="{{ product.title | escape }}"
+                  class="product-card-image"
+                  loading="lazy"
+                >
+              {% else %}
+                <div class="product-card-image-placeholder">Select a Product</div>
+              {% endif %}
+
+              <button
+                class="product-modal-trigger"
+                data-product-modal-trigger="{{ product.id }}"
+                style="top: {{ block.settings.hotspot_y }}%; left: {{ block.settings.hotspot_x }}%;"
+                aria-label="Quick view {{ product.title | escape }}"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.custom-featured-products {
+    width: 100%;
+    padding: 40px 0;
+    background-color: #f5f5f5;
+}
+.custom-featured-product-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.custom-featured-products-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.custom-featured-products-title {
+    font-size: 32px;
+    font-weight: normal;
+    margin: 0;
+}
+.custom-featured-products-empty{
+    text-align: center;
+    padding: 50px 20px;
+    background: #fff;
+    border: 1px dashed #ccc;
+    font-size: 18px;
+    color: #777;
+}
+.custom-featured-products-grid {
+    display: grid;
+    grid-template-columns: repeat(3,  1fr);
+    gap: 15px;
+}
+.product-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid #eee;
+    padding: 10px;
+    text-align: center;
+    overflow: hidden;
+}
+.product-card-image-wrapper {
+    position: relative;
+    aspect-ratio: 1;
+    background-color: #eaeaea;
+    overflow: hidden;
+}
+.product-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.product-card-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+    font-size: 14px;
+}
+.product-modal-trigger {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.8);
+    border: 1px solid #ccc;
+    box-shadow: 0 3px 4px 0px rgba(0,0,0,0.1);
+    font-size: 15px;
+    line-height: 22px;
+    text-align: center;
+    color: #000;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.product-modal-trigger:hover {
+    background-color: rgba(255,255,255,1);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+@media (max-width: 768px) {
+
+    .custom-featured-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 480px) {
+    .custom-featured-products-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": " Custom featured products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_featured_products_title",
+      "label": "Title",
+      "default": "Tisso vison in the wild"
+    }
+  ],
+  "blocks": [
+    {
+        "type": "lookbook_item",
+        "name": "Lookbook Image",
+        "settings": [
+            {
+                "type": "product",
+                "id": "product",
+                "label": "Select Product"
+                
+            },
+            {
+                "type": "image_picker",
+                "id": "custom_image",
+                "label": "Custom Image (optional)",
+                "info": "upload lifestyle photo"
+            },
+            {
+                "type": "text",
+                "id": "override_colors",
+                "label": "Override Colors (optional)",
+                "info": "Comma-separated values, e.g. Red, Blue, Green"
+            },
+            {
+                "type": "text",
+                "id": "override_sizes",
+                "label": "Override Sizes (optional)",
+                "info": "Comma-separated values, e.g. S, M, L, XL"
+             },
+             {
+              "type": "range",
+              "id": "hotspot_x",
+              "label": "Hotspot X Position (%)",
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "default": 50
+             },
+             {
+              "type": "range",
+              "id": "hotspot_y",
+              "label": "Hotspot Y Position (%)",
+              "min": 0,
+              "max": 100,
+              "step": 1,
+              "default": 50
+             }
+        ]
+
+    
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom featured products",
+      "blocks": [
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":62, "hotspot_y":58, "override_colors":"white,Black" }
+                },
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":45, "hotspot_y":38, "override_colors":"Blue,Navy" }
+                },
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":52, "hotspot_y":52, "override_colors":"Red,Grey" }
+                },
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":30, "hotspot_y":70, "override_colors":"Green,Olive" }
+                },
+
+                { 
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":70, "hotspot_y":30, "override_colors":"Yellow,Gold" }
+                },
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":40, "hotspot_y":60, "override_colors":"Pink,Magenta" }
+                },
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":60, "hotspot_y":40, "override_colors":"Purple,Violet" }
+                },
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":50, "hotspot_y":50, "override_colors":"Brown,Tan" }
+                },
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":20, "hotspot_y":80, "override_colors":"Cyan,Teal" }
+                },
+                {
+                "type": "lookbook_item",
+                "settings": {"hotspot_x":80, "hotspot_y":20, "override_colors":"Maroon,Burgundy" }
+                }
+            
+        
+      ]
+    }
+  ]
+}
+{% endschema %}
