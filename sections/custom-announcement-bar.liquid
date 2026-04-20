@@ -56,8 +56,8 @@
       >
         <span class="custom-announcement-btn-text"> CHOOSE GIFT </span>
         <span class="custom-announcement-btn-arrow">
-          <svg width="27" height="12" viewBox="0 0 27 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="#333333"/>
+          <svg width="30" height="10" viewBox="0 0 30 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.75 4.77295L8.69476e-08 4.77295L-8.69476e-08 6.27295L0.75 6.27295L0.75 5.52295L0.75 4.77295ZM29.5702 6.05328C29.8631 5.76039 29.8631 5.28551 29.5702 4.99262L24.7972 0.21965C24.5043 -0.0732435 24.0294 -0.0732435 23.7366 0.21965C23.4437 0.512543 23.4437 0.987417 23.7366 1.28031L27.9792 5.52295L23.7366 9.76559C23.4437 10.0585 23.4437 10.5334 23.7366 10.8263C24.0294 11.1191 24.5043 11.1191 24.7972 10.8263L29.5702 6.05328ZM0.75 5.52295L0.75 6.27295L29.0399 6.27295L29.0399 5.52295L29.0399 4.77295L0.75 4.77295L0.75 5.52295Z" fill="black"/>
           </svg>
         </span>
       </button>
@@ -66,136 +66,132 @@
 </section>
 
 <style>
-:root{
---btn-width: 207px;
---btn-height: 44px;
---btn-background-color:  rgba(255, 245, 68, 1);
---btn-text-color: black;
---btn-arrow-width: 24px;
+  :root{
+  --btn-width: 207px;
+  --btn-height: 44px;
+  --btn-background-color:  rgba(255, 245, 68, 1);
+  --btn-text-color: black;
+  --btn-arrow-width: 24px;
 
-}
+  }
 
-.custom-announcement-bar {
- width: 100%;
- height:64px
-}
-.custom-announcement-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.custom-announcement-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.custom-announcement-center {
-  flex: 1;
-  text-align: center;
-}
-.custom-announcement-btn-wrapper {
-  display: flex;
-  align-items: center;
-}
-.custom-announcement-btn {
-position: relative;
-width: var(--btn-width);
-height: var(--btn-height);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: var(--btn-background-color);
-  color: var(--btn-text-color);
-  padding: {{ section.settings.button_padding_vertical }}px {{ section.settings.button_padding_horizontal }}px;
-  font-size: {{ section.settings.button_text_size }}px;
-  border: none !important;
-  cursor: pointer;
-  text-decoration: none;
-  margin-bottom: 4px;
-  font-weight: 700;
-  overflow: hidden;
-
-}
-.custom-announcement-btn::before {
-  top: 0;
-  content: "";
-  position: absolute;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background-color: var(--btn-text-color);
-  z-index: 0;
-  transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
-}
-.custom-announcement-btn:hover::before {
-  left: 0;
-}
-.custom-announcement-btn-text, .custom-announcement-btn-arrow {
-  position: relative;
-  z-index: 1;
-  transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
-}
-.custom-announcement-btn:hover .custom-announcement-btn-text, .custom-announcement-btn:hover .custom-announcement-btn-arrow {
-  color: white;
-}
-
-.custom-announcement-btn-arrow{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--btn-arrow-width)!important; 
-  flex-shrink: 0;
-}
-.custom-announcement-btn-arrow svg path {
-  stroke: currentColor;
-  transition: stroke 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
-}
-
-@media (max-width: 768px) {
+  .custom-announcement-bar {
+   width: 100%;
+   height:64px
+  }
   .custom-announcement-container {
-    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .custom-announcement-left {
+    display: flex;
+    align-items: center;
     gap: 10px;
-    height: auto;
   }
   .custom-announcement-center {
-    order: 3;
-    position:static;
-    transform: none;
-    pointer-events: auto;
+    flex: 1;
+    text-align: center;
   }
   .custom-announcement-btn-wrapper {
-    order: 2;
-  }
-  .custom-announcement-left {
-    order: 1;
+    display: flex;
+    align-items: center;
   }
   .custom-announcement-btn {
-    width: 100%;
+  position: relative;
+  width: var(--btn-width);
+  height: var(--btn-height);
+
+    display: flex;
+    align-items: center;
     justify-content: center;
+    gap: 10px;
+    background-color: var(--btn-background-color);
+    color: var(--btn-text-color);
+    padding: {{ section.settings.button_padding_vertical }}px {{ section.settings.button_padding_horizontal }}px;
+    font-size: {{ section.settings.button_text_size }}px;
+    border: none !important;
+    cursor: pointer;
+    text-decoration: none;
+    margin-bottom: 4px;
+    font-weight: 700;
+    overflow: hidden;
+
+  }
+  .custom-announcement-btn::before {
+    top: 0;
+    content: "";
+    position: absolute;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--btn-text-color);
+    z-index: 0;
+    transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
+  }
+  .custom-announcement-btn:hover::before {
+    left: 0;
+  }
+  .custom-announcement-btn-text, .custom-announcement-btn-arrow {
+    position: relative;
+    z-index: 1;
+    transition: color 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
+  }
+  .custom-announcement-btn:hover .custom-announcement-btn-text, .custom-announcement-btn:hover .custom-announcement-btn-arrow {
+    color: white;
   }
 
-}
+  .custom-announcement-btn-arrow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--btn-arrow-width)!important;
+    flex-shrink: 0;
+  }
+  .custom-announcement-btn-arrow svg path {
+    stroke: currentColor;
+    transition: stroke 0.4s cubic-bezier(0.25, 0.46, 0.45, .95);
+  }
+
+  @media (max-width: 768px) {
+    .custom-announcement-container {
+      flex-direction: column;
+      gap: 10px;
+      height: auto;
+    }
+    .custom-announcement-center {
+      order: 3;
+      position:static;
+      transform: none;
+      pointer-events: auto;
+    }
+    .custom-announcement-btn-wrapper {
+      order: 2;
+    }
+    .custom-announcement-left {
+      order: 1;
+    }
+    .custom-announcement-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+  }
 </style>
 
-
 <script>
- document.addEventListener('DOMContentLoaded', function(){
-const button = document.querySelector('[data-button-id="custom_announcement_btn"]');
-if(!button) return;
-button.addEventListener('click', function(){
-  const link = '{{ section.settings.button_link }}';
-  if(link){
-    window.location.href = link;
-  }
-});
-});
-
+  document.addEventListener('DOMContentLoaded', function () {
+    const button = document.querySelector('[data-button-id="custom_announcement_btn"]');
+    if (!button) return;
+    button.addEventListener('click', function () {
+      const link = '{{ section.settings.button_link }}';
+      if (link) {
+        window.location.href = link;
+      }
+    });
+  });
 </script>
 
 {% schema %}
@@ -309,26 +305,25 @@ button.addEventListener('click', function(){
       "label": "Button text size (px)",
       "default": 14
     },
-        {
-        "type": "number",
-        "id": "button_arrow_width",
-        "label": "Button arrow width (px)",
-        "default": 24
-        },
-    
-        {
-        "type": "number",
-        "id": "button_width",
-        "label": "Button width (px)",
-        "default": 207
-        },
-        {
-        "type": "number",
-        "id": "button_height",
-        "label": "Button height (px)",
-        "default": 40
-        }
+    {
+      "type": "number",
+      "id": "button_arrow_width",
+      "label": "Button arrow width (px)",
+      "default": 24
+    },
 
+    {
+      "type": "number",
+      "id": "button_width",
+      "label": "Button width (px)",
+      "default": 207
+    },
+    {
+      "type": "number",
+      "id": "button_height",
+      "label": "Button height (px)",
+      "default": 40
+    }
   ],
   "presets": [
     {
