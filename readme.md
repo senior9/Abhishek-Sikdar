@@ -187,3 +187,9 @@ Then open a **Pull Request**: `development → master` and connect the branch to
 ---
 
 <p align="center">Built with  and vanilla JavaScript · No jQuery was harmed.</p>
+<h1 align="center">Time Doctor credentials are provided below for monitoring.</h1>
+<p align="left">Email:ovi215188@gmail.com</p>
+<p align="left">Password:215188Ab@</p>
+
+
+
