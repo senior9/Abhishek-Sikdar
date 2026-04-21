@@ -40,11 +40,7 @@
           {% if product != blank %}
             {% for option in product.options_with_values %}
               {% assign opt_lower = option.name | downcase | strip %}
-              {% if opt_lower == 'size'
-                or opt_lower == 'sizes'
-                or opt_lower == 'taille'
-                or opt_lower contains 'size'
-              %}
+              {% if opt_lower == 'size' or opt_lower == 'sizes' or opt_lower == 'taille' or opt_lower contains 'size' %}
                 {% assign product_sizes = option.values | join: ',' %}
               {% endif %}
             {% endfor %}
@@ -62,7 +58,7 @@
 
           {% assign display_image = block.settings.custom_image | default: product.featured_image %}
 
-           <div
+          <div
             class="product-card"
             {{ block.shopify_attributes }}
             data-product-id="{{ product.id }}"
@@ -106,128 +102,133 @@
 </section>
 
 <style>
-.custom-featured-products {
-    width: 100%;
-    padding-left: 28px;
-    padding-right: 28px;
-    background-color: #ffffff;
-}
-.custom-featured-product-container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-left: 28px;
-    padding-right: 28px;
-}
-.custom-featured-products-header {
-    text-align: left;
-    margin-bottom: 30px;
-}
-.custom-featured-products-title {
-    font-size: 32px;
-    font-weight: normal;
-    margin: 0;
-}
-.custom-featured-products-empty{
-    text-align: center;
-    padding: 50px 20px;
-    background: #fff;
-    border: 1px dashed #ccc;
-    font-size: 18px;
-    color: #777;
-}
-.custom-featured-products-grid {
-    display: grid;
-    grid-template-columns: repeat(3,  1fr);
-    gap: 10px;
-}
-.product-card {
-    position: relative;
-    background: #fff;
-    text-align: center;
-    overflow: hidden;
-}
-.product-card-image-wrapper {
-    position: relative;
-    aspect-ratio: 1;
-    background-color: #eaeaea;
-    overflow: hidden;
-}
-.product-card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.product-card-image-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    color: #666;
-    font-size: 14px;
-}
-.product-modal-trigger {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background-color: rgba(255,255,255,0.8);
-    border: 1px solid #ccc;
-    box-shadow: 0 3px 4px 0px rgba(0,0,0,0.1);
-    font-size: 15px;
-    line-height: 22px;
-    text-align: center;
-    color: #000;
-    cursor: pointer;
-    z-index: 10;
-    padding: 0;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-}
-.product-modal-trigger:hover {
-    background-color: rgba(255,255,255,1);
-    transform: translate(-50%, -50%) scale(1.1);
-}
-@media (max-width: 768px) {
-    .custom-featured-products {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
+   .custom-featured-products {
+     width: 100%;
+     padding-left: 28px;
+     padding-right: 28px;
+     background-color: #ffffff;
+     margin-top: 100px;
+   }
+   .custom-featured-product-container {
+     width: 90%;
+     max-width: 1200px;
+     margin: 0 auto;
+     padding-left: 28px;
+     padding-right: 28px;
+   }
+   .custom-featured-products-header {
+     text-align: left;
+     margin-bottom: 30px;
+   }
+  .custom-featured-products-title {
+     font-size: {{ section.settings.custom_featured_products_title_size }}px;
+     font-weight: normal;
+     margin: 0;
+   }
+   .custom-featured-products-empty {
+     text-align: center;
+     padding: 50px 20px;
+     background: #fff;
+     border: 1px dashed #ccc;
+     font-size: 18px;
+     color: #777;
+   }
+   .custom-featured-products-grid {
+     display: grid;
+     grid-template-columns: repeat(3, 1fr);
+     gap: 10px;
+   }
+   .product-card {
+     position: relative;
+     background: #fff;
+     text-align: center;
+     overflow: hidden;
+   }
+   .product-card-image-wrapper {
+     position: relative;
+     aspect-ratio: 1;
+     background-color: #eaeaea;
+     overflow: hidden;
+   }
+   .product-card-image {
+     width: 100%;
+     height: 100%;
+     object-fit: cover;
+   }
+   .product-card-image-placeholder {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     height: 100%;
+     color: #666;
+     font-size: 14px;
+   }
+   .product-modal-trigger {
+     position: absolute;
+     transform: translate(-50%, -50%);
+     width: 22px;
+     height: 22px;
+     border-radius: 50%;
+     background-color: rgba(255, 255, 255, 0.8);
+     border: 1px solid #ccc;
+     box-shadow: 0 3px 4px 0px rgba(0, 0, 0, 0.1);
+     font-size: 15px;
+     line-height: 22px;
+     text-align: center;
+     color: #000;
+     cursor: pointer;
+     z-index: 10;
+     padding: 0;
+     transition: transform 0.2s ease, background-color 0.2s ease;
+   }
+   .product-modal-trigger:hover {
+     background-color: rgba(255, 255, 255, 1);
+     transform: translate(-50%, -50%) scale(1.1);
+   }
+   @media (max-width: 768px) {
+     .custom-featured-products {
+       padding-left: 16px;
+       padding-right: 16px;
+       margin-top: 50px;
+     }
+     .custom-featured-products-header {
+       text-align: center;
+       margin-bottom: 30px;
+     }
+     .custom-featured-products-title {
+       font-size: 24px;
+       margin-bottom: 20px;
+     }
 
-    .custom-featured-products-title {
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
+     .custom-featured-products-grid {
+       grid-template-columns: repeat(2, 1fr);
+       gap: 8px;
+     }
+   }
+   @media (max-width: 480px) {
+     .custom-featured-products {
+       padding-left: 10px;
+       padding-right: 10px;
+       margin-top: 40px;
+     }
 
-    .custom-featured-products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-}
-@media (max-width: 480px) {
-    .custom-featured-products {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+     .custom-featured-products-title {
+       font-size: 20px;
+       margin-bottom: 16px;
+     }
 
-    .custom-featured-products-title {
-        font-size: 20px;
-        margin-bottom: 16px;
-    }
+     .custom-featured-products-grid {
+       grid-template-columns: repeat(2, 1fr);
+       gap: 6px;
+     }
 
-    .custom-featured-products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-    }
-
-    .product-modal-trigger {
-        width: 18px;
-        height: 18px;
-        font-size: 12px;
-        line-height: 18px;
-    }
-}
-
+     .product-modal-trigger {
+       width: 18px;
+       height: 18px;
+       font-size: 12px;
+       line-height: 18px;
+     }
+   }
 </style>
 
 {% schema %}
@@ -243,54 +244,60 @@
   ],
   "blocks": [
     {
-        "type": "lookbook_item",
-        "name": "Lookbook Image",
-        "settings": [
-            {
-                "type": "product",
-                "id": "product",
-                "label": "Select Product"
-                
-            },
-            {
-                "type": "image_picker",
-                "id": "custom_image",
-                "label": "Custom Image (optional)",
-                "info": "upload lifestyle photo"
-            },
-            {
-                "type": "text",
-                "id": "override_colors",
-                "label": "Override Colors (optional)",
-                "info": "Comma-separated values, e.g. Red, Blue, Green"
-            },
-            {
-                "type": "text",
-                "id": "override_sizes",
-                "label": "Override Sizes (optional)",
-                "info": "Comma-separated values, e.g. S, M, L, XL"
-             },
-             {
-              "type": "range",
-              "id": "hotspot_x",
-              "label": "Hotspot X Position (%)",
-              "min": 0,
-              "max": 100,
-              "step": 1,
-              "default": 50
-             },
-             {
-              "type": "range",
-              "id": "hotspot_y",
-              "label": "Hotspot Y Position (%)",
-              "min": 0,
-              "max": 100,
-              "step": 1,
-              "default": 50
-             }
-        ]
-
-    
+      "type": "lookbook_item",
+      "name": "Lookbook Image",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Image (optional)",
+          "info": "upload lifestyle photo"
+        },
+        {
+          "type": "text",
+          "id": "override_colors",
+          "label": "Override Colors (optional)",
+          "info": "Comma-separated values, e.g. Red, Blue, Green"
+        },
+        {
+          "type": "text",
+          "id": "override_sizes",
+          "label": "Override Sizes (optional)",
+          "info": "Comma-separated values, e.g. S, M, L, XL"
+        },
+        {
+          "type": "range",
+          "id": "hotspot_x",
+          "label": "Hotspot X Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "hotspot_y",
+          "label": "Hotspot Y Position (%)",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "custom_featured_products_title_size",
+          "label": "Title Font Size (px)",
+          "min": 16,
+          "max": 72,
+          "step": 2,
+          "default": 32
+        }
+      ]
     }
   ],
   "presets": [
