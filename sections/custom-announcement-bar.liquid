@@ -1,0 +1,544 @@
+<section
+  class="announcement"
+  style="
+    background-color: {{ section.settings.bg_color }};
+    font-family: {{ section.settings.font_family }};
+  "
+>
+  <div class="announcement_container">
+
+    {% comment %}LEFT:Toggle + Logo{% endcomment %}
+    <div class="announcement_left">
+
+      <!-- Mobile Toggle Button (Hamburger  Close) -->
+      <button
+        type="button"
+        class="announcement_toggle"
+        id="announcement-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+      >
+        <!-- Hamburger Icon -->
+        <span class="announcement_icon announcement_icon--hamburger">
+          <svg width="18" height="16" viewBox="0 0 22 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="1"  x2="22" y2="1"  stroke="black" stroke-width="2"/>
+            <line x1="0" y1="8"  x2="22" y2="8"  stroke="black" stroke-width="2"/>
+            <line x1="0" y1="15" x2="22" y2="15" stroke="black" stroke-width="2"/>
+          </svg>
+        </span>
+
+        <!-- Close Icon -->
+        <span class="announcement_icon announcement_icon--close">
+          <svg width="12.73" height="13" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="1"  y1="1"  x2="17" y2="17" stroke="black" stroke-width="2"/>
+            <line x1="17" y1="1"  x2="1"  y2="17" stroke="black" stroke-width="2"/>
+          </svg>
+        </span>
+      </button>
+
+      <!-- Logo -->
+      {%- if section.settings.logo_image != blank -%}
+        <img
+          src="{{ section.settings.logo_image | image_url }}"
+          alt="Announcement Logo"
+          class="announcement_logo-image"
+          width="150"
+          height="auto"
+          loading="lazy"
+        >
+      {%- else -%}
+        <p
+          class="announcement_logo-text"
+          style="
+            color: {{ section.settings.custom_announcement_text }};
+            margin: 0;
+            font-weight: 700;
+          "
+        >
+          {{ section.settings.custom_announcement_logo }}
+        </p>
+      {%- endif -%}
+    </div>
+
+
+    {% comment %}CENTRE: Announcement Text {% endcomment %}
+    <div class="announcement_centre">
+      <p
+        class="announcement_centre-text"
+        style="
+          color: {{ section.settings.custom_announcement_center_text_color }};
+          font-size: {{ section.settings.custom_announcement_center_text_size }}px;
+          margin: 0;
+        "
+      >
+        {{ section.settings.custom_announcement_center_text }}
+      </p>
+    </div>
+
+
+    {% comment %} RIGHT: CTA Button (hidden on mobile by default) {% endcomment %}
+    <div class="announcement_btn-wrapper">
+      <button
+        type="button"
+        id="announcement-btn"
+        class="announcement_btn"
+        data-link="{{ section.settings.button_link }}"
+      >
+        <span class="announcement_btn-text">{{ section.settings.button_text }}</span>
+        <span class="announcement_btn-arrow">
+          <svg width="27" height="12" viewBox="0 0 27 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z" fill="currentColor"/>
+</svg>
+
+        </span>
+      </button>
+    </div> 
+
+  </div>
+</section>
+
+
+{% comment %} SCOPED STYLES {% endcomment %}
+
+<style>
+  /*  CSS Custom Properties  */
+  :root {
+    --ab-btn-width:      207px;
+    --ab-btn-height:     44px;
+    --ab-btn-bg:         rgba(255, 245, 68, 1);
+    --ab-btn-text:       black;
+    --ab-btn-arrow-w:    24px;
+  }
+
+
+  /*  DESKTOP STYLES */
+
+  /* Section Bar */
+  .announcement {
+    width: 100%;
+    height: 64px;
+    padding: {{ section.settings.padding_vertical }}px {{ section.settings.padding_horizontal }}px;
+  }
+
+  /*  Container */
+  .announcement_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Left: Logo Area */
+  .announcement_left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .announcement_logo-text {
+    font-size: {{ section.settings.custom_announcement_text_size }}px;
+  }
+
+  /*  Centre: Text  */
+  .announcement_centre {
+    flex: 1;
+    text-align: center;
+  }
+
+  /* Right: Button Wrapper  */
+  .announcement_btn-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+
+  /* BUTTON STYLES*/
+
+  .announcement_btn {
+    position: relative;
+    width: var(--ab-btn-width);
+    height: var(--ab-btn-height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--ab-btn-bg);
+    color: var(--ab-btn-text);
+    padding: {{ section.settings.button_padding_vertical }}px {{ section.settings.button_padding_horizontal }}px;
+    font-size: {{ section.settings.button_text_size }}px;
+    border: none !important;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 700;
+    overflow: hidden;
+  }
+
+  /*  Swipe-Fill Hover Background */
+  .announcement_btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--ab-btn-text);
+    z-index: 0;
+    transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.95);
+  }
+
+  .announcement_btn:hover::before {
+    left: 0;
+  }
+
+  /*  Keep Text & Arrow Above Fill  */
+  .announcement_btn-text,
+  .announcement_btn-arrow {
+    position: relative;
+    z-index: 1;
+    transition: color 0.4s ease;
+  }
+
+  /*  Hover: Text & Arrow Turn White  */
+  .announcement_btn:hover .announcement_btn-text,
+  .announcement_btn:hover .announcement_btn-arrow {
+    color: white;
+  }
+
+  /* Arrow Sizing*/
+  .announcement_btn-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ab-btn-arrow-w) !important;
+    flex-shrink: 0;
+  }
+
+
+  /* TOGGLE BUTTON */
+
+  .announcement_toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /*  Icon Containers  */
+  .announcement_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .announcement_icon--close {
+    display: none;
+  }
+
+
+  /*  MOBILE STYLES (max-width: 768px) */
+
+  @media (max-width: 768px) {
+
+    /*  Bar Resets  */
+    .announcement {
+      height: auto;
+      padding: 0 !important;
+    }
+
+    /* Stack Vertically  */
+    .announcement_container {
+      flex-direction: column;
+      gap: 0;
+      height: auto;
+      width: 100%;
+    }
+
+    /*  Top Row: Hamburger + Logo  */
+    .announcement_left {
+      order: 1;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      padding: 18px 20px;
+      background-color: #f5f5f5;
+      position: relative;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    /*  Show Toggle Button  */
+    .announcement_toggle {
+      display: flex;
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Logo Text Sizing */
+    .announcement_logo-text {
+      font-size: 16px !important;
+      letter-spacing: 2px !important;
+      text-align: center;
+      margin: 0 auto !important;
+    }
+
+
+    /*  Centre Text: Hidden by Default  */
+    .announcement_centre {
+      order: 2;
+      width: 100%;
+      background-color: #f5f5f5;
+      text-align: center;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding: 0 16px;
+      transition:
+        max-height 0.4s ease,
+        opacity 0.3s ease,
+        padding 0.3s ease;
+    }
+
+    .announcement_centre-text {
+      font-size: 13px !important;
+      color: #333 !important;
+      padding: 14px 0 4px;
+    }
+
+
+    /*  Button Wrapper: Hidden by Default  */
+    .announcement_btn-wrapper {
+      order: 3;
+      {% comment %} width: 100%; {% endcomment %}
+      background-color: #f5f5f5;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding: 0 16px;
+      transition:
+        max-height 0.4s ease,
+        opacity 0.3s ease,
+        padding 0.3s ease;
+    }
+
+    /*  Button Mobile Overrides  */
+    .announcement__btn {
+      width: var(--ab-btn-width-mobile) !important;
+      height: var(--ab-btn-height-mobile) !important;
+      justify-content: center;
+      margin: 0 auto !important;
+      font-size: 13px !important;
+      letter-spacing: 1.5px;
+    }
+
+
+    /*OPEN STATE*/
+
+    /*  Reveal Centre Text  */
+    .announcement.is-open .announcement_centre {
+      max-height: 80px;
+      opacity: 1;
+      padding: 8px 16px 0;
+    }
+
+    /*  Reveal Button Wrapper  */
+    .announcement.is-open .announcement_btn-wrapper {
+      max-height: 80px;
+      opacity: 1;
+      padding: 8px 16px 10px;
+    }
+
+    /*  Icon Switch:  */
+    .announcement.is-open .announcement_icon--hamburger {
+      display: none;
+    }
+
+    .announcement.is-open .announcement_icon--close {
+      display: flex;
+    }
+  }
+</style>
+
+
+{% comment %}JAVASCRIPT{% endcomment %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    'use strict';
+
+    /*  Hamburger Toggle  */
+    var bar       = document.querySelector('.announcement');
+    var toggleBtn = document.getElementById('announcement-toggle');
+
+    if (toggleBtn && bar) {
+      toggleBtn.addEventListener('click', function () {
+        var isOpen = bar.classList.toggle('is-open');
+        toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+
+    /*  CTA Button Navigation  */
+    var ctaBtn = document.getElementById('announcement-btn');
+
+    if (ctaBtn) {
+      ctaBtn.addEventListener('click', function () {
+        var link = '{{ section.settings.button_link }}';
+        if (link && link !== '#') {
+          window.location.href = link;
+        }
+      });
+    }
+  });
+</script>
+
+
+{% comment %}  Theme Editor Settings{% endcomment %}
+
+{% schema %}
+{
+  "name": "Custom Announcement Bar",
+  "settings": [
+
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "custom_announcement_logo",
+      "label": "Logo Text",
+      "default": "TISSO VISON"
+    },
+    {
+      "type": "text",
+      "id": "custom_announcement_text",
+      "label": "Logo Text Colour",
+      "default": "#333333"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image"
+    },
+    {
+      "type": "number",
+      "id": "custom_announcement_text_size",
+      "label": "Logo Text Size (px)",
+      "default": 18
+    },
+
+    {
+      "type": "header",
+      "content": "Centre Text"
+    },
+    {
+      "type": "text",
+      "id": "custom_announcement_center_text",
+      "label": "Centre Text",
+      "default": "Find the ideal gift for your loved ones"
+    },
+    {
+      "type": "text",
+      "id": "custom_announcement_center_text_color",
+      "label": "Centre Text Colour",
+      "default": "#333333"
+    },
+    {
+      "type": "number",
+      "id": "custom_announcement_center_text_size",
+      "label": "Centre Text Size (px)",
+      "default": 14
+    },
+
+    {
+      "type": "header",
+      "content": " Appearance "
+    },
+    {
+      "type": "text",
+      "id": "font_family",
+      "label": "Font Family",
+      "default": "Poppins, Montserrat, sans-serif"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Colour",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "number",
+      "id": "padding_vertical",
+      "label": "Vertical Padding (px)",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "id": "padding_horizontal",
+      "label": "Horizontal Padding (px)",
+      "default": 20
+    },
+
+    {
+      "type": "header",
+      "content": " Button "
+    },
+    {
+      "type": "text",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "#"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "CHOOSE GIFT"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Colour",
+      "default": "#fff544"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Colour",
+      "default": "#000000"
+    },
+    {
+      "type": "number",
+      "id": "button_padding_vertical",
+      "label": "Button Vertical Padding (px)",
+      "default": 10
+    },
+    {
+      "type": "number",
+      "id": "button_padding_horizontal",
+      "label": "Button Horizontal Padding (px)",
+      "default": 28
+    },
+    {
+      "type": "number",
+      "id": "button_text_size",
+      "label": "Button Text Size (px)",
+      "default": 13
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "Custom Announcement Bar",
+      "category": "Announcement"
+    }
+  ]
+}
+{% endschema %}

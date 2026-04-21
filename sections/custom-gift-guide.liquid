@@ -1,0 +1,870 @@
+{% comment %}
+
+  GIFT GUIDE HERO SECTION
+  -Desktop: Full-width top banner + split content / image row with configurable ratio.
+  -Mobile:  Top banner hidden, content stacksabove image, button overlays image centre.
+  -Button locked to 220×50 px.
+  -Arrow accepts inline SVG with width/heightand currentColor-aware tinting.
+{% endcomment %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+  rel="stylesheet"
+>
+
+{%- liquid
+  assign top_banner = section.settings.top_banner_image
+  assign right_image = section.settings.right_image
+  assign right_image_mob = section.settings.right_image_mobile
+  assign button_url = section.settings.button_url
+  assign arrow_svg = section.settings.arrow_svg
+  assign desc_mobile = section.settings.description_mobile
+-%}
+
+{% comment %}  SCOPED THEME VARIABLES  {% endcomment %}
+<style>
+  #shopify-section-{{ section.id }} {
+    --ggh-bg:                {{ section.settings.section_bg_color }};
+    --ggh-placeholder-bg:    {{ section.settings.placeholder_bg_color }};
+
+    /* Typography */
+    --ggh-font-family:       {{ section.settings.font_family }};
+    --ggh-title-color:       {{ section.settings.title_color }};
+    --ggh-title-size:        {{ section.settings.title_size }}px;
+    --ggh-title-weight:      {{ section.settings.title_weight }};
+    --ggh-desc-color:        {{ section.settings.desc_color }};
+    --ggh-desc-size:         {{ section.settings.desc_size }}px;
+    --ggh-desc-weight:       {{ section.settings.desc_weight }};
+    
+
+    /* Layout */
+    --ggh-left-width:        {{ section.settings.left_width }}fr;
+    --ggh-right-width:       {{ section.settings.right_width }}fr;
+    --ggh-content-pad-x:     {{ section.settings.content_padding }}px;
+    --ggh-content-pad-y:     {{ section.settings.section_padding }}px;
+
+    /* Button */
+    --ggh-btn-mob-x:         {{ section.settings.btn_mobile_pos_x }}%;
+    --ggh-btn-mob-y:         {{ section.settings.btn_mobile_pos_y }}%;
+    --ggh-btn-bg:            {{ section.settings.btn_bg_color }};
+    --ggh-btn-text:          {{ section.settings.btn_text_color }};
+    --ggh-btn-border-color:  {{ section.settings.btn_border_color }};
+    --ggh-btn-border-width:  {{ section.settings.btn_border_width }}px;
+    --ggh-btn-hover-bg:      {{ section.settings.btn_hover_bg_color }};
+    --ggh-btn-hover-text:    {{ section.settings.btn_hover_text_color }};
+    --ggh-btn-font-size:     {{ section.settings.btn_font_size }}px;
+    --ggh-btn-font-weight:   {{ section.settings.btn_font_weight }};
+    --ggh-btn-letter-sp:     {{ section.settings.btn_letter_spacing }}px;
+    --ggh-btn-radius:        {{ section.settings.btn_border_radius }}px;
+
+    /* Arrow Icon */
+    --ggh-arrow-w:           {{ section.settings.arrow_width }}px;
+    --ggh-arrow-h:           {{ section.settings.arrow_height }}px;
+    --ggh-arrow-color:       {{ section.settings.arrow_color }};
+    --ggh-arrow-hover-color: {{ section.settings.arrow_hover_color }};
+
+    /* Image focal points */
+    --ggh-img-x:             {{ section.settings.image_position_x }}%;
+    --ggh-img-y:             {{ section.settings.image_position_y }}%;
+    --ggh-img-mob-x:         {{ section.settings.image_position_mobile_x }}%;
+    --ggh-img-mob-y:         {{ section.settings.image_position_mobile_y }}%;
+  }
+
+  /* BASE SECTION*/
+  #shopify-section-{{ section.id }} .gift-guide-hero {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--ggh-bg);
+    font-family: var(--ggh-font-family);
+  }
+
+  /*  TOP BANNER (desktop only)  */
+  #shopify-section-{{ section.id }} .gift-guide-hero_top {
+    width: 100%;
+    line-height: 0;
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_top-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  /*  BOTTOM GRID  */
+  #shopify-section-{{ section.id }} .gift-guide-hero_bottom {
+    display: grid;
+    grid-template-columns: var(--ggh-left-width) var(--ggh-right-width);
+    align-items: stretch;
+  }
+
+  /*  CONTENT COLUMN  */
+  #shopify-section-{{ section.id }} .gift-guide-hero_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+    min-height: 402px;
+    padding: var(--ggh-content-pad-y) var(--ggh-content-pad-x);
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_title {
+    margin: 0 0 20px;
+    color: var(--ggh-title-color);
+    font-size: var(--ggh-title-size);
+    font-weight: var(--ggh-title-weight);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_description {
+    margin: 0 0 32px;
+    color: var(--ggh-desc-color);
+    font-size: var(--ggh-desc-size);
+    font-weight: var(--ggh-desc-weight);
+    line-height: 1.6;
+  }
+   #shopify-section-{{ section.id }} .gift-guide-hero_description--mobile {
+    display: none;
+  }
+
+  /*  BUTTON  */
+  #shopify-section-{{ section.id }} .gift-guide-hero_btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    white-space: nowrap;
+
+    /* Fixed size per request */
+    width: 220px;
+    height: 50px;
+    padding: 0;
+
+    /* Theme */
+    background-color: var(--ggh-btn-bg);
+    color: var(--ggh-btn-text);
+    font-family: inherit;
+    font-size: var(--ggh-btn-font-size);
+    font-weight: var(--ggh-btn-font-weight);
+    letter-spacing: var(--ggh-btn-letter-sp);
+    text-transform: uppercase;
+    border: var(--ggh-btn-border-width) solid var(--ggh-btn-border-color);
+    border-radius: var(--ggh-btn-radius);
+
+    /* Animation */
+    transition: color 0.3s ease;
+  }
+
+  /* Swipe-fill hover background */
+  #shopify-section-{{ section.id }} .gift-guide-hero_btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: var(--ggh-btn-hover-bg);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_btn:hover::before {
+    transform: translateX(0);
+  }
+
+  /* Hover text forced to black */
+  #shopify-section-{{ section.id }} .gift-guide-hero_btn:hover {
+   color: var(--ggh-btn-hover-text);
+  }
+
+  /* Children above fill layer */
+  #shopify-section-{{ section.id }} .gift-guide-hero_btn > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /*  ARROW ICON  */
+  #shopify-section-{{ section.id }} .btn-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--ggh-arrow-w);
+    height: var(--ggh-arrow-h);
+    color: var(--ggh-arrow-color);
+    transition: color 0.3s ease;
+  }
+
+  #shopify-section-{{ section.id }} .btn-arrow svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_btn:hover .btn-arrow {
+    color: var(--ggh-arrow-hover-color);
+  }
+
+  /* Hide mobile button on desktop */
+  #shopify-section-{{ section.id }} .gift-guide-hero_btn--mobile {
+    display: none;
+  }
+
+  /*  IMAGE COLUMN  */
+  #shopify-section-{{ section.id }} .gift-guide-hero_visual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 402px;
+    overflow: hidden;
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_image--desktop {
+    object-position: var(--ggh-img-x) var(--ggh-img-y);
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_image--mobile {
+    display: none;
+    object-position: var(--ggh-img-mob-x) var(--ggh-img-mob-y);
+  }
+
+  /*  PLACEHOLDERS  */
+  #shopify-section-{{ section.id }} .gift-guide-hero_placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: var(--ggh-placeholder-bg);
+    border: 2px dashed #cccccc;
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_placeholder--top {
+    min-height: 340px;
+  }
+
+  #shopify-section-{{ section.id }} .gift-guide-hero_placeholder--visual {
+    min-height: 402px;
+    height: 100%;
+  }
+
+  /* MOBILE  (max-width: 768px)*/
+  @media screen and (max-width: 768px) {
+    #shopify-section-{{ section.id }} .gift-guide-hero_top {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_bottom {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_content {
+      order: 1;
+      align-items: center;
+      min-height: auto;
+      padding: 40px 24px 30px;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_title {
+      margin-bottom: 16px;
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_description {
+      margin: 0 auto;
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 300px;
+      text-align: center;
+    }
+     #shopify-section-{{ section.id }} .gift-guide-hero_description--desktop {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_description--mobile {
+      display: block;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_btn--desktop {
+      display: none;
+    }
+
+    /* Mobile overlay button */
+    #shopify-section-{{ section.id }} .gift-guide-hero_btn--mobile {
+      display: inline-flex !important;
+      position: absolute;
+      top: var(--ggh-btn-mob-y);
+      left: var(--ggh-btn-mob-x);
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      width: 220px;
+      height: 50px;
+      padding: 0;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
+
+    /* Image area */
+    #shopify-section-{{ section.id }} .gift-guide-hero_visual {
+      order: 2;
+      height: 380px;
+      min-height: 380px;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_image--desktop {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_image--mobile {
+      display: block;
+    }
+  }
+
+  /*  Extra small phones  */
+  @media screen and (max-width: 480px) {
+    #shopify-section-{{ section.id }} .gift-guide-hero_title {
+      font-size: 28px;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_description {
+      font-size: 13px;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_visual {
+      height: 340px;
+      min-height: 340px;
+    }
+  }
+</style>
+
+{% comment %}  MARKUP  {% endcomment %}
+<section class="gift-guide-hero">
+  {% comment %} 1. Top Banner desktop only {% endcomment %}
+  <div class="gift-guide-hero_top">
+    {%- if top_banner -%}
+      <img
+        src="{{ top_banner | image_url: width: 2000 }}"
+        alt="{{ top_banner.alt | escape | default: 'Gift Guide Banner' }}"
+        class="gift-guide-hero_top-image"
+        width="2000"
+        height=""
+        loading="eager"
+      >
+    {%- else -%}
+      <div class="gift-guide-hero_placeholder gift-guide-hero_placeholder--top">
+        <p>Add Top Banner Image</p>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {% comment %} 2. Bottom Row  Content + Image {% endcomment %}
+  <div class="gift-guide-hero_bottom">
+    {% comment %} Left: Text content {% endcomment %}
+    <div class="gift-guide-hero_content">
+      <h1 class="gift-guide-hero_title">
+        {{ section.settings.main_title | escape }}
+      </h1>
+
+      <p class="gift-guide-hero_description gift-guide-hero_description--desktop">
+        {{ section.settings.description | escape }}
+      </p>
+
+      <!-- Mobile Description (falls back to desktop if empty) -->
+      <p class="gift-guide-hero_description gift-guide-hero_description--mobile">
+        {%- if desc_mobile != blank -%}
+          {{ desc_mobile | escape }}
+        {%- else -%}
+          {{ section.settings.description | escape }}
+        {%- endif -%}
+      </p>
+
+      <button type="button" class="gift-guide-hero_btn gift-guide-hero_btn--desktop">
+        <span class="btn-label">{{ section.settings.button_text | escape }}</span>
+
+        <span class="btn-arrow">
+          {%- if arrow_svg != blank -%}
+            {{ arrow_svg }}
+          {%- else -%}
+            →
+          {%- endif -%}
+        </span>
+      </button>
+    </div>
+
+    {% comment %} Right: Image + mobile CTA overlay {% endcomment %}
+    <div class="gift-guide-hero_visual">
+      {%- if right_image or right_image_mob -%}
+        {% comment %} Desktop image {% endcomment %}
+        {%- if right_image -%}
+          <img
+            src="{{ right_image | image_url: width: 1500 }}"
+            alt="{{ right_image.alt | escape | default: 'Gift Guide' }}"
+            class="gift-guide-hero_image gift-guide-hero_image--desktop"
+            width="1500"
+            height=""
+            loading="lazy"
+          >
+        {%- endif -%}
+
+        {% comment %} Mobile image (dedicated or fallback) {% endcomment %}
+        {%- if right_image_mob -%}
+          <img
+            src="{{ right_image_mob | image_url: width: 800 }}"
+            alt="{{ right_image_mob.alt | escape | default: 'Gift Guide' }}"
+            class="gift-guide-hero_image gift-guide-hero_image--mobile"
+            width="800"
+            height=""
+            loading="lazy"
+          >
+        {%- elsif right_image -%}
+          <img
+            src="{{ right_image | image_url: width: 800 }}"
+            alt="{{ right_image.alt | escape | default: 'Gift Guide' }}"
+            class="gift-guide-hero_image gift-guide-hero_image--mobile"
+            width="800"
+            height=""
+            loading="lazy"
+          >
+        {%- endif -%}
+
+        {% comment %} Mobile-only centred button {% endcomment %}
+        <button type="button" class="gift-guide-hero_btn gift-guide-hero_btn--mobile">
+          <span class="btn-label">{{ section.settings.button_text | escape }}</span>
+
+          <span class="btn-arrow">
+            {%- if arrow_svg != blank -%}
+              {{ arrow_svg }}
+            {%- else -%}
+              →
+            {%- endif -%}
+          </span>
+        </button>
+
+      {%- else -%}
+        <div class="gift-guide-hero_placeholder gift-guide-hero_placeholder--visual">
+          <p>Add Right Side Image</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% comment %}  SCRIPTS  {% endcomment %}
+<script>
+  (function () {
+    'use strict';
+
+    var url = {{ button_url | json }};
+    if (!url) return;
+
+    var section = document.getElementById('shopify-section-{{ section.id }}');
+    if (!section) return;
+
+    section.querySelectorAll('.gift-guide-hero_btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        window.location.href = url;
+      });
+    });
+  })();
+</script>
+
+{% comment %}  SCHEMA  {% endcomment %}
+{% schema %}
+{
+  "name": "Gift Guide Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "top_banner_image",
+      "label": "Top Banner Image (Desktop Only)",
+      "info": "Hidden on mobile devices"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image",
+      "label": "Right Side Image (Desktop)",
+      "info": "Shown on desktop view"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_image_mobile",
+      "label": "Mobile Image (Optional)",
+      "info": "Recommended for mobile. If empty, desktop image will be used."
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Main Title",
+      "default": "The Gift Guide"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+    },
+    {
+      "type": "textarea",
+      "id": "description_mobile",
+      "label": "Description (Mobile)",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination.",
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "SHOP NOW"
+    },
+     {
+      "type": "color",
+      "id": "btn_hover_text_color",
+      "label": "Button Hover Text Color",
+      "default": "#000000"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Arrow Icon (SVG)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Paste an inline SVG below. Use fill='currentColor' or stroke='currentColor' so the color pickers below work automatically."
+    },
+    {
+      "type": "textarea",
+      "id": "arrow_svg",
+      "label": "Arrow SVG Code",
+      "default": "<svg width='27' height='12' viewBox='0 0 27 12' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path d='M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z' fill='currentColor'/></svg>"
+    },
+    {
+      "type": "range",
+      "id": "arrow_width",
+      "label": "Arrow Width (px)",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "arrow_height",
+      "label": "Arrow Height (px)",
+      "min": 8,
+      "max": 40,
+      "step": 1,
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "arrow_color",
+      "label": "Arrow Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "arrow_hover_color",
+      "label": "Arrow Hover Color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg_color",
+      "label": "Section Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "placeholder_bg_color",
+      "label": "Placeholder Background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button Background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_border_color",
+      "label": "Button Border Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_bg_color",
+      "label": "Button Hover Background",
+      "default": "#ffff00"
+    },
+    {
+      "type": "header",
+      "content": "Layout Ratio (Desktop)"
+    },
+    {
+      "type": "range",
+      "id": "left_width",
+      "label": "Left Content Width",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 3,
+      "info": "Lower = smaller left side"
+    },
+    {
+      "type": "range",
+      "id": "right_width",
+      "label": "Right Image Width",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 7,
+      "info": "Higher = bigger right side"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Content Padding Vertical (px)",
+      "min": 20,
+      "max": 120,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content Padding Horizontal (px)",
+      "min": 0,
+      "max": 100,
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "font_family",
+      "label": "Font Family",
+      "options": [
+        { "value": "'Poppins', sans-serif", "label": "Poppins (Recommended)" },
+        { "value": "'Montserrat', sans-serif", "label": "Montserrat" },
+        { "value": "'Inter', sans-serif", "label": "Inter" },
+        { "value": "'DM Sans', sans-serif", "label": "DM Sans" },
+        { "value": "Arial, sans-serif", "label": "Arial" },
+        { "value": "'Times New Roman', serif", "label": "Times New Roman" },
+        { "value": "'Georgia', serif", "label": "Georgia" },
+        { "value": "'Helvetica Neue', Helvetica, sans-serif", "label": "Helvetica Neue" }
+      ],
+      "default": "'Poppins', sans-serif"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Font Size (px)",
+      "min": 28,
+      "max": 80,
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "title_weight",
+      "label": "Title Font Weight",
+      "min": 300,
+      "max": 800,
+      "step": 100,
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "desc_size",
+      "label": "Description Font Size (px)",
+      "min": 12,
+      "max": 24,
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "desc_weight",
+      "label": "Description Font Weight",
+      "min": 300,
+      "max": 700,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Button Styling"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Button Position"
+    },
+    {
+      "type": "range",
+      "id": "btn_mobile_pos_x",
+      "label": "Button Horizontal Position (%)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50,
+      "info": "0 = Left edge, 50 = Center, 100 = Right edge"
+    },
+    {
+      "type": "range",
+      "id": "btn_mobile_pos_y",
+      "label": "Button Vertical Position (%)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50,
+      "info": "0 = Top edge, 50 = Center, 100 = Bottom edge"
+    },
+    {
+      "type": "range",
+      "id": "btn_font_size",
+      "label": "Button Font Size (px)",
+      "min": 10,
+      "max": 20,
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "btn_border_width",
+      "label": "Button Border Width (px)",
+      "min": 0,
+      "max": 4,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "btn_border_radius",
+      "label": "Button Border Radius (px)",
+      "min": 0,
+      "max": 30,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "btn_font_weight",
+      "label": "Button Font Weight",
+      "min": 300,
+      "max": 900,
+      "step": 100,
+      "default": 500
+    },
+    {
+      "type": "range",
+      "id": "btn_letter_spacing",
+      "label": "Button Letter Spacing (px)",
+      "min": 0,
+      "max": 6,
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Image Position - Desktop"
+    },
+    {
+      "type": "range",
+      "id": "image_position_x",
+      "label": "Desktop Horizontal Position (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "info": "0 = Left, 50 = Center, 100 = Right"
+    },
+    {
+      "type": "range",
+      "id": "image_position_y",
+      "label": "Desktop Vertical Position (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "info": "0 = Top, 50 = Center, 100 = Bottom"
+    },
+    {
+      "type": "header",
+      "content": "Image Position - Mobile"
+    },
+    {
+      "type": "range",
+      "id": "image_position_mobile_x",
+      "label": "Mobile Horizontal Position (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "info": "Adjust mobile image horizontal position"
+    },
+    {
+      "type": "range",
+      "id": "image_position_mobile_y",
+      "label": "Mobile Vertical Position (%)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "info": "Adjust mobile image vertical position"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Guide Hero"
+    }
+  ]
+}
+{% endschema %}

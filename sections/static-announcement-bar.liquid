@@ -1,0 +1,125 @@
+{% if section.settings.enabled %}
+  <div class="static-announcement-bar">
+    <p class="static-bar_text static-bar_text--desktop">
+      {{ section.settings.text }}
+    </p>
+    <p class="static-bar_text static-bar_text--mobile">
+      {% if section.settings.text_mobile != blank %}
+        {{ section.settings.text_mobile }}
+      {% else %}
+        {{ section.settings.text }}
+      {% endif %}
+    </p>
+  </div>
+{% endif %}
+
+<style>
+  /*  Desktop  */
+  .static-announcement-bar {
+    width: 100%;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    background: {{ section.settings.background_color }};
+    padding: 10px 20px;
+    border-top: 1px solid #eeeeee;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    box-sizing: border-box;
+  }
+
+  .static-bar_text {
+    text-transform: uppercase;
+    color: {{ section.settings.text_color }};
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  /* Mobile text hidden on desktop */
+  .static-bar_text--mobile {
+    display: none;
+  }
+
+  /*  Mobile (max-width: 768px)  */
+  @media screen and (max-width: 768px) {
+    .static-announcement-bar {
+      padding: 8px 16px;
+      min-height: 30px;
+    }
+
+    .static-bar_text--desktop {
+      display: none;
+    }
+
+    .static-bar_text--mobile {
+      display: block;
+      font-size: 12px;
+    }
+  }
+
+  /*  Small Phones (max-width: 480px)  */
+  @media screen and (max-width: 480px) {
+    .static-announcement-bar {
+      padding: 6px 12px;
+    }
+
+    .static-bar_text--mobile {
+      font-size: 11px;
+      letter-spacing: 0.02em;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Static Announcement Bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "enable bar",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Bar text",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    },
+    {
+      "type": "text",
+      "id": "text_mobile",
+      "label": "Mobile Bar Text",
+      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text_color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#dcd7d7"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Static Announcement Bar",
+      "category": "Announcement"
+    }
+  ]
+}
+{% endschema %}
