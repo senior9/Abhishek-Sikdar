@@ -20,6 +20,7 @@
   assign right_image_mob = section.settings.right_image_mobile
   assign button_url = section.settings.button_url
   assign arrow_svg = section.settings.arrow_svg
+  assign desc_mobile = section.settings.description_mobile
 -%}
 
 {% comment %}  SCOPED THEME VARIABLES  {% endcomment %}
@@ -103,7 +104,7 @@
   #shopify-section-{{ section.id }} .gift-guide-hero_content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     box-sizing: border-box;
     min-height: 402px;
     padding: var(--ggh-content-pad-y) var(--ggh-content-pad-x);
@@ -124,6 +125,9 @@
     font-size: var(--ggh-desc-size);
     font-weight: var(--ggh-desc-weight);
     line-height: 1.6;
+  }
+   #shopify-section-{{ section.id }} .gift-guide-hero_description--mobile {
+    display: none;
   }
 
   /*  BUTTON  */
@@ -287,6 +291,13 @@
       max-width: 300px;
       text-align: center;
     }
+     #shopify-section-{{ section.id }} .gift-guide-hero_description--desktop {
+      display: none;
+    }
+
+    #shopify-section-{{ section.id }} .gift-guide-hero_description--mobile {
+      display: block;
+    }
 
     #shopify-section-{{ section.id }} .gift-guide-hero_btn--desktop {
       display: none;
@@ -369,8 +380,17 @@
         {{ section.settings.main_title | escape }}
       </h1>
 
-      <p class="gift-guide-hero_description">
+      <p class="gift-guide-hero_description gift-guide-hero_description--desktop">
         {{ section.settings.description | escape }}
+      </p>
+
+      <!-- Mobile Description (falls back to desktop if empty) -->
+      <p class="gift-guide-hero_description gift-guide-hero_description--mobile">
+        {%- if desc_mobile != blank -%}
+          {{ desc_mobile | escape }}
+        {%- else -%}
+          {{ section.settings.description | escape }}
+        {%- endif -%}
       </p>
 
       <button type="button" class="gift-guide-hero_btn gift-guide-hero_btn--desktop">
@@ -507,6 +527,12 @@
       "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
     },
     {
+      "type": "textarea",
+      "id": "description_mobile",
+      "label": "Description (Mobile)",
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination.",
+    },
+    {
       "type": "text",
       "id": "button_text",
       "label": "Button Text",
@@ -535,7 +561,7 @@
       "type": "textarea",
       "id": "arrow_svg",
       "label": "Arrow SVG Code",
-      "default": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='currentColor'><path d='M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z'/></svg>"
+      "default": "<svg width='27' height='12' viewBox='0 0 27 12' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path d='M0.75 4.77298C0.335786 4.77298 -3.62117e-08 5.10877 0 5.52298C3.62117e-08 5.93719 0.335786 6.27298 0.75 6.27298L0.75 4.77298ZM26.2803 6.05331C26.5732 5.76041 26.5732 5.28554 26.2803 4.99265L21.5074 0.219677C21.2145 -0.0732163 20.7396 -0.0732163 20.4467 0.219677C20.1538 0.512571 20.1538 0.987444 20.4467 1.28034L24.6893 5.52298L20.4467 9.76562C20.1538 10.0585 20.1538 10.5334 20.4467 10.8263C20.7396 11.1192 21.2145 11.1192 21.5074 10.8263L26.2803 6.05331ZM0.75 6.27298L25.75 6.27298L25.75 4.77298L0.75 4.77298L0.75 6.27298Z' fill='currentColor'/></svg>"
     },
     {
       "type": "range",

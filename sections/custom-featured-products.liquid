@@ -20,43 +20,49 @@
           {% if product != blank %}
             {% for option in product.options_with_values %}
               {% assign opt_lower = option.name | downcase | strip %}
-              {% assign found = false %}
-              {% if opt_lower == 'color' or opt_lower == 'colour' or opt_lower == 'colors' or opt_lower == 'colours' -%}
-                {%- assign found = true -%}
-              {%- endif %}
-              {% if opt_lower == 'couleur'
+              {% if opt_lower == 'color'
+                or opt_lower == 'colour'
+                or opt_lower == 'colors'
+                or opt_lower == 'colours'
+                or opt_lower == 'couleur'
                 or opt_lower == 'farbe'
                 or opt_lower == 'colore'
-              -%}
-                {%- assign found = true -%}
-              {%- endif %}
-              {% if opt_lower contains 'color' or opt_lower contains 'colour' %}{% assign found = true %}{% endif %}
-              {% if found %}{% assign product_colors = option.values | join: ',' %}{% endif %}
+                or opt_lower contains 'color'
+                or opt_lower contains 'colour'
+              %}
+                {% assign product_colors = option.values | join: ',' %}
+              {% endif %}
             {% endfor %}
-            {% if product_colors == '' and product.options_with_values.size > 0 %}
-              {% assign first_opt = product.options_with_values[0] %}
-              {% assign product_colors = first_opt.values | join: ',' %}
-            {% endif %}
           {% endif %}
 
-          {%- comment -%} Auto-detect sizes {%- endcomment -%}
+          {%- comment -%} ── Auto-detect Sizes from product options ── {%- endcomment -%}
           {% assign product_sizes = '' %}
           {% if product != blank %}
             {% for option in product.options_with_values %}
               {% assign opt_lower = option.name | downcase | strip %}
-              {% if opt_lower == 'size' or opt_lower == 'sizes' or opt_lower == 'taille' %}
+              {% if opt_lower == 'size'
+                or opt_lower == 'sizes'
+                or opt_lower == 'taille'
+                or opt_lower contains 'size'
+              %}
                 {% assign product_sizes = option.values | join: ',' %}
               {% endif %}
             {% endfor %}
           {% endif %}
 
-          {%- comment -%} Override wins over auto-detect {%- endcomment -%}
-          {% assign final_colors = block.settings.override_colors | default: product_colors %}
-          {% assign final_sizes = block.settings.override_sizes | default: product_sizes %}
+          {%- comment -%} ── Override only if merchant filled it in ── {%- endcomment -%}
+          {% assign final_colors = product_colors %}
+          {% assign final_sizes = product_sizes %}
+          {% if block.settings.override_colors != blank %}
+            {% assign final_colors = block.settings.override_colors %}
+          {% endif %}
+          {% if block.settings.override_sizes != blank %}
+            {% assign final_sizes = block.settings.override_sizes %}
+          {% endif %}
 
           {% assign display_image = block.settings.custom_image | default: product.featured_image %}
 
-          <div
+           <div
             class="product-card"
             {{ block.shopify_attributes }}
             data-product-id="{{ product.id }}"
@@ -65,6 +71,8 @@
             data-product-description="{{ product.description | strip_html | escape }}"
             data-product-colors="{{ final_colors }}"
             data-product-sizes="{{ final_sizes }}"
+            data-product-handle="{{ product.handle }}"
+            data-product-variants="{{ product.variants | json | escape }}"
           >
             <div class="product-card-image-wrapper">
               {% if display_image %}
@@ -102,7 +110,7 @@
     width: 100%;
     padding-left: 28px;
     padding-right: 28px;
-    background-color: #f5f5f5;
+    background-color: #ffffff;
 }
 .custom-featured-product-container {
     width: 90%;
@@ -181,14 +189,42 @@
     transform: translate(-50%, -50%) scale(1.1);
 }
 @media (max-width: 768px) {
+    .custom-featured-products {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .custom-featured-products-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
 
     .custom-featured-products-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
     }
 }
 @media (max-width: 480px) {
+    .custom-featured-products {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .custom-featured-products-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
     .custom-featured-products-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    .product-modal-trigger {
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+        line-height: 18px;
     }
 }
 
@@ -261,29 +297,12 @@
     {
       "name": "Custom featured products",
       "blocks": [
-                {
-          "type": "lookbook_item",
-          "settings": { "hotspot_x": 62, "hotspot_y": 58, "override_colors": "White, Black" }
-        },
-        {
-          "type": "lookbook_item",
-          "settings": { "hotspot_x": 45, "hotspot_y": 38, "override_colors": "Blue - Black, Navy" }
-        },
-        { "type": "lookbook_item", "settings": { "hotspot_x": 52, "hotspot_y": 52, "override_colors": "Red, Grey" } },
-        {
-          "type": "lookbook_item",
-          "settings": { "hotspot_x": 38, "hotspot_y": 42, "override_colors": "Gray - Black, Charcoal" }
-        },
-        {
-          "type": "lookbook_item",
-          "settings": { "hotspot_x": 56, "hotspot_y": 46, "override_colors": "Green - Black, Olive" }
-        },
-        {
-          "type": "lookbook_item",
-          "settings": { "hotspot_x": 48, "hotspot_y": 60, "override_colors": "Denim - Orange, Blue" }
-        }
-            
-        
+        { "type": "lookbook_item", "settings": { "hotspot_x": 62, "hotspot_y": 58 } },
+        { "type": "lookbook_item", "settings": { "hotspot_x": 45, "hotspot_y": 38 } },
+        { "type": "lookbook_item", "settings": { "hotspot_x": 52, "hotspot_y": 52 } },
+        { "type": "lookbook_item", "settings": { "hotspot_x": 38, "hotspot_y": 42 } },
+        { "type": "lookbook_item", "settings": { "hotspot_x": 56, "hotspot_y": 46 } },
+        { "type": "lookbook_item", "settings": { "hotspot_x": 48, "hotspot_y": 60 } }
       ]
     }
   ]

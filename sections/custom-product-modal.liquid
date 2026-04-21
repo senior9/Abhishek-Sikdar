@@ -386,422 +386,454 @@
 </style>
 
 <script>
-const COLOR_HEX_MAP = {
-    black: '#000000',
-    white: '#FFFFFF',
-    offwhite: '#FAF9F6',
-    ivory: '#FFFFF0',
-    cream: '#FFFDD0',
-    natural: '#F5F5DC',
-    ecru: '#C4A882',
-    oat: '#DFCBA4',
-    pearl: '#EAE0C8',
-    nude: '#E3BC9A',
-    beige: '#D4C5A9',
-    sand: '#C2B280',
-    taupe: '#483C32',
-    taupegrey: '#7A6E5E',
-    champagne: '#F7E7CE',
-    bone: '#E8DCC8',
-    rice: '#FAF0E6',
-    linen: '#FAF0E6',
-    chalk: '#F5F5F0',
-    gray: '#808080',
-    grey: '#808080',
-    lightgray: '#D3D3D3',
-    lightgrey: '#D3D3D3',
-    darkgray: '#A9A9A9',
-    darkgrey: '#A9A9A9',
-    charcoal: '#36454F',
-    slate: '#708090',
-    slategray: '#708090',
-    slategrey: '#708090',
-    graphite: '#383838',
-    ash: '#B2BEB5',
-    heather: '#B2C3D1',
-    pewter: '#96A8A1',
-    silver: '#C0C0C0',
-    smoke: '#738276',
-    fog: '#C9C9BB',
-    steel: '#71797E',
-    gunmetal: '#2C3539',
-    onyx: '#353839',
-    anthracite: '#383E42',
-    cement: '#A8A9AD',
-    concrete: '#95A5A6',
-    pumice: '#C5C2B8',
-    cloud: '#F0EDED',
-    mist: '#D5D6D2',
-    dove: '#EDEDEB',
-    flint: '#6F7264',
-    stone: '#928E85',
-    pebble: '#B8B5A3',
-    rock: '#7B7D6F',
-    iron: '#48494B',
-    lead: '#4E4E4E',
-    zinc: '#7B7D7D',
-    nickel: '#727472',
-    tin: '#8A8D8F',
-    aluminum: '#D3D3D3',
-    blue: '#1A3C6E',
-    navy: '#1B2A4A',
-    navyblue: '#1B2A4A',
-    royalblue: '#4169E1',
-    cobalt: '#0047AB',
-    midnightblue: '#191970',
-    darkblue: '#00008B',
-    lightblue: '#ADD8E6',
-    skyblue: '#87CEEB',
-    babyblue: '#89CFF0',
-    iceblue: '#D6ECEF',
-    powderblue: '#B0E0E6',
-    denim: '#1560BD',
-    indigo: '#4B0082',
-    slateblue: '#6A5ACD',
-    cornflower: '#6495ED',
-    cerulean: '#007BA7',
-    teal: '#008080',
-    aqua: '#00FFFF',
-    cyan: '#00FFFF',
-    turquoise: '#40E0D0',
-    ocean: '#0077B6',
-    marine: '#043B6F',
-    sapphire: '#0F52BA',
-    lapis: '#26619C',
-    prussianblue: '#003153',
-    frenchblue: '#0072B5',
-    electricblue: '#7DF9FF',
-    arcticblue: '#D6ECEF',
-    pastelblue: '#AEC6CF',
-    duckegg: '#C3E4E8',
-    steelblue: '#4682B4',
-    airforceblue: '#5D8AA8',
-    cambridgeblue: '#A3C1AD',
-    persianblue: '#1C39BB',
-    red: '#C41E3A',
-    darkred: '#8B0000',
-    lightred: '#FF6B6B',
-    crimson: '#DC143C',
-    scarlet: '#FF2400',
-    burgundy: '#722F37',
-    wine: '#722F37',
-    sangria: '#92000A',
-    maroon: '#800000',
-    cherry: '#DE3163',
-    raspberry: '#E30B5C',
-    rose: '#FF007F',
-    pink: '#E8788A',
-    lightpink: '#FFB6C1',
-    hotpink: '#FF69B4',
-    fuchsia: '#FF00FF',
-    magenta: '#FF00FF',
-    blush: '#DE5D83',
-    dustyrose: '#DCAE96',
-    coral: '#FF7F50',
-    salmon: '#FA8072',
-    peach: '#FFDAB9',
-    apricot: '#FBCEB1',
-    tomato: '#FF6347',
-    brick: '#CB4154',
-    terracotta: '#E2725B',
-    rust: '#B7410E',
-    cinnamon: '#D2691E',
-    paprika: '#8C0017',
-    mulberry: '#C54B8C',
-    mauve: '#E0B0FF',
-    lilac: '#C8A2C8',
-    wisteria: '#C9A0DC',
-    plum: '#8E4585',
-    boysenberry: '#873F58',
-    blackberry: '#440021',
-    watermelon: '#FC6C85',
-    flamingo: '#FC8EAC',
-    strawberry: '#FC5A8D',
-    carmine: '#960018',
-    vermillion: '#E34234',
-    green: '#2D5A27',
-    darkgreen: '#006400',
-    lightgreen: '#90EE90',
-    forestgreen: '#228B22',
-    emerald: '#50C878',
-    olive: '#556B2F',
-    olivedrab: '#6B8E23',
-    sage: '#BCB88A',
-    mint: '#98FF98',
-    lime: '#00FF00',
-    huntergreen: '#355E3B',
-    armygreen: '#4B5320',
-    khaki: '#BDB76B',
-    moss: '#8A9A5B',
-    fern: '#4F7942',
-    pine: '#01796F',
-    celadon: '#ACE1AF',
-    pistachio: '#93C572',
-    chartreuse: '#7FFF00',
-    seagreen: '#2E8B57',
-    jade: '#00A86B',
-    malachite: '#4F9B6E',
-    eucalyptus: '#44D7A8',
-    grass: '#3A7D44',
-    meadow: '#4ADE80',
-    laurel: '#6C7A3A',
-    myrtle: '#3D8B37',
-    cactus: '#3A6B35',
-    clover: '#3EA99F',
-    thyme: '#A2B5A0',
-    basil: '#53A66A',
-    matcha: '#A4C639',
-    avocado: '#568203',
-    mango: '#FF8243',
-    brown: '#6B4226',
-    darkbrown: '#3E2723',
-    lightbrown: '#A5734A',
-    chocolate: '#7B3F00',
-    coffee: '#6F4E37',
-    espresso: '#3C1414',
-    mocha: '#967969',
-    caramel: '#FFD59A',
-    camel: '#C19A6B',
-    tan: '#D2B48C',
-    honey: '#EB9605',
-    amber: '#FFBF00',
-    gold: '#FFD700',
-    bronze: '#CD7F32',
-    copper: '#B87333',
-    walnut: '#773F1A',
-    pecan: '#9C661F',
-    hazelnut: '#A0522D',
-    sienna: '#A0522D',
-    chestnut: '#954535',
-    auburn: '#A52A2A',
-    ginger: '#B06500',
-    clove: '#7B2D26',
-    mahogany: '#C04000',
-    saffron: '#F4C430',
-    turmeric: '#E28913',
-    mustard: '#FFDB58',
-    saddlebrown: '#8B4513',
-    burlwood: '#825E3C',
-    tobacco: '#71543F',
-    licorice: '#1A1110',
-    truffle: '#5C4033',
-    mushroom: '#BFA58F',
-    porcini: '#6B4F3A',
-    roast: '#6F4E37',
-    burntorange: '#CC5500',
-    tangerine: '#FF9966',
-    pumpkin: '#FF7518',
-    purple: '#5B2C6F',
-    darkpurple: '#301934',
-    lightpurple: '#BF77EC',
-    violet: '#7F00FF',
-    lavender: '#E6E6FA',
-    amethyst: '#9966CC',
-    eggplant: '#614051',
-    grape: '#6F2DA8',
-    orchid: '#DA70D6',
-    heliotrope: '#DF73FF',
-    thistle: '#D8BFD8',
-    periwinkle: '#CCCCFF',
-    jacaranda: '#7E6BA6',
-    ultraviolet: '#7B00FF',
-    yellow: '#F4D03F',
-    lightyellow: '#FFFFE0',
-    darkyellow: '#FFD700',
-    golden: '#FFD700',
-    goldenrod: '#DAA520',
-    lemon: '#FFF44F',
-    canary: '#FFEF00',
-    butter: '#FFF1AA',
-    sunflower: '#FFDA03',
-    daffodil: '#FFFF6F',
-    curry: '#D4A017',
-    orange: '#E8702A',
-    lightorange: '#FFB347',
-    darkorange: '#FF8C00',
-    marigold: '#EAA221',
-  };
+  (function () {
+    'use strict';
 
+    /*  COLOUR HEX MAPUsed to render colour strips in the modal.*/
+    var COLOR_HEX_MAP = {
+      black:'#000000',white:'#FFFFFF',offwhite:'#FAF9F6',ivory:'#FFFFF0',
+      cream:'#FFFDD0',natural:'#F5F5DC',ecru:'#C4A882',oat:'#DFCBA4',
+      pearl:'#EAE0C8',nude:'#E3BC9A',beige:'#D4C5A9',sand:'#C2B280',
+      taupe:'#483C32',champagne:'#F7E7CE',bone:'#E8DCC8',linen:'#FAF0E6',
+      gray:'#808080',grey:'#808080',lightgray:'#D3D3D3',lightgrey:'#D3D3D3',
+      darkgray:'#A9A9A9',darkgrey:'#A9A9A9',charcoal:'#36454F',slate:'#708090',
+      graphite:'#383838',ash:'#B2BEB5',silver:'#C0C0C0',steel:'#71797E',
+      gunmetal:'#2C3539',onyx:'#353839',blue:'#1A3C6E',navy:'#1B2A4A',
+      royalblue:'#4169E1',cobalt:'#0047AB',lightblue:'#ADD8E6',skyblue:'#87CEEB',
+      denim:'#1560BD',indigo:'#4B0082',teal:'#008080',aqua:'#00FFFF',
+      turquoise:'#40E0D0',sapphire:'#0F52BA',red:'#C41E3A',crimson:'#DC143C',
+      scarlet:'#FF2400',burgundy:'#722F37',wine:'#722F37',maroon:'#800000',
+      cherry:'#DE3163',rose:'#FF007F',pink:'#E8788A',hotpink:'#FF69B4',
+      fuchsia:'#FF00FF',coral:'#FF7F50',salmon:'#FA8072',peach:'#FFDAB9',
+      rust:'#B7410E',terracotta:'#E2725B',brick:'#CB4154',green:'#2D5A27',
+      darkgreen:'#006400',lightgreen:'#90EE90',emerald:'#50C878',olive:'#556B2F',
+      sage:'#BCB88A',mint:'#98FF98',lime:'#00FF00',khaki:'#BDB76B',
+      moss:'#8A9A5B',pine:'#01796F',jade:'#00A86B',brown:'#6B4226',
+      chocolate:'#7B3F00',coffee:'#6F4E37',mocha:'#967969',caramel:'#FFD59A',
+      camel:'#C19A6B',tan:'#D2B48C',honey:'#EB9605',amber:'#FFBF00',
+      gold:'#FFD700',bronze:'#CD7F32',copper:'#B87333',walnut:'#773F1A',
+      chestnut:'#954535',mahogany:'#C04000',mustard:'#FFDB58',purple:'#5B2C6F',
+      violet:'#7F00FF',lavender:'#E6E6FA',plum:'#8E4585',orchid:'#DA70D6',
+      yellow:'#F4D03F',lemon:'#FFF44F',butter:'#FFF1AA',sunflower:'#FFDA03',
+      orange:'#E8702A',tangerine:'#FF9966',pumpkin:'#FF7518',marigold:'#EAA221'
+    };
 
-  const resolveColorHex = (name) => {
-    if (!name || typeof name !== 'string') return '#888888';
-    const k = name.toLowerCase().replace(/[\s\-_\.]/g, '');
-    return COLOR_HEX_MAP[k] || '#888888';
-  };
-
-  const customModal = document.getElementById('customProductModal');
-  const customOverlay = document.getElementById('customProductModalOverlay');
-  const customCloseBtn = document.getElementById('customProductModalClose');
-  const customColorContainer = document.getElementById('customModalColorOptions');
-  const customColorWrapper = document.getElementById('customModalColorOptionContainer');
-  const customSizeWrapper = document.getElementById('customModalSizeWrapper');
-  const customSizeTrigger = customSizeWrapper.querySelector('.custom-size-trigger');
-  const customSizeValueEl = document.getElementById('customModalSizeValue');
-  const customSizeOptions = document.getElementById('customModalSizeOptions');
-  const customSizeCaret = document.getElementById('customSizeCaret');
-  const customSizeHidden = document.getElementById('customModalSizeSelect');
-  const customDefaultSizes = ['XS', 'S', 'M', 'L', 'XL'];
-
-  const buildCustomColors = (data) => {
-    customColorContainer.innerHTML = '';
-    if (!data || !data.trim()) {
-      customColorWrapper.style.display = 'none';
-      return;
+    function resolveColorHex(name) {
+      if (!name || typeof name !== 'string') return '#888888';
+      var k = name.toLowerCase().replace(/[\s\-_\.]/g, '');
+      return COLOR_HEX_MAP[k] || '#888888';
     }
-    customColorWrapper.style.display = 'flex';
 
-    const colors = data.split(',').map((c) => c.trim()).filter(Boolean);
-    const customSlider = document.createElement('div');
-    customSlider.className = 'custom-slider';
-    customColorContainer.appendChild(customSlider);
 
-    let hasClicked = false;
+    /* DOM REFERENCES*/
+    var modal          = document.getElementById('customProductModal');
+    var overlay        = document.getElementById('customProductModalOverlay');
+    var closeBtn       = document.getElementById('customProductModalClose');
+    var addToCartBtn   = document.getElementById('customModalAddToCart');
+    var colorContainer = document.getElementById('customModalColorOptions');
+    var colorWrapper   = document.getElementById('customModalColorOptionContainer');
+    var sizeWrapper    = document.getElementById('customModalSizeWrapper');
+    var sizeTrigger    = sizeWrapper.querySelector('.custom-size-trigger');
+    var sizeValueEl    = document.getElementById('customModalSizeValue');
+    var sizeOptions    = document.getElementById('customModalSizeOptions');
+    var sizeCaret      = document.getElementById('customSizeCaret');
+    var sizeHidden     = document.getElementById('customModalSizeSelect');
 
-    colors.forEach((color, index) => {
-      const hex = resolveColorHex(color);
-      const ellipse = document.createElement('div');
-      ellipse.className = 'custom-color-split-option';
-      ellipse.dataset.color = color;
-      ellipse.style.borderLeftColor = hex;
+    var DEFAULT_SIZES  = ['XS', 'S', 'M', 'L', 'XL'];
 
-      ellipse.innerHTML = `
-        <div class="custom-color-strip" style="background-color: ${hex};"></div>
-        <span class="custom-color-text">${color}</span>
-      `;
 
-      ellipse.addEventListener('click', () => {
-        customColorContainer.querySelectorAll('.custom-color-split-option').forEach((opt) => {
-          opt.classList.remove('custom-active');
+    /*  STATE Tracks current product in modal*/
+    var currentProduct = {
+      handle:   '',
+      variants: [],
+      color:    '',
+      size:     ''
+    };
+
+    /* Auto-add config from schema */
+    var autoAdd = {
+      handle: '{{ section.settings.auto_add_product.handle | default: "" }}',
+      color:  '{{ section.settings.auto_add_color | default: "Black" | escape }}',
+      size:   '{{ section.settings.auto_add_size | default: "Medium" | escape }}'
+    };
+
+
+    /* COLOUR OPTIONS BUILDER */
+    function buildColors(data) {
+      colorContainer.innerHTML = '';
+      currentProduct.color = '';
+
+      if (!data || !data.trim()) {
+        colorWrapper.style.display = 'none';
+        return;
+      }
+
+      colorWrapper.style.display = 'flex';
+      var colors = data.split(',').map(function (c) { return c.trim(); }).filter(Boolean);
+
+      colors.forEach(function (color) {
+        var hex = resolveColorHex(color);
+        var el  = document.createElement('div');
+        el.className = 'custom-color-split-option';
+        el.dataset.color = color;
+        el.style.borderLeftColor = hex;
+        el.innerHTML =
+          '<div class="custom-color-strip" style="background-color:' + hex + ';"></div>' +
+          '<span class="custom-color-text">' + color + '</span>';
+
+        el.addEventListener('click', function () {
+          colorContainer.querySelectorAll('.custom-color-split-option').forEach(function (o) {
+            o.classList.remove('custom-active');
+          });
+          el.classList.add('custom-active');
+          currentProduct.color = color;
         });
-        ellipse.classList.add('custom-active');
 
-        if (index === 0) customSlider.classList.remove('custom-right');
-        else customSlider.classList.add('custom-right');
-
-        if (!hasClicked) {
-          customSlider.classList.add('custom-active');
-          hasClicked = true;
-        }
+        colorContainer.appendChild(el);
       });
+    }
 
-      customColorContainer.appendChild(ellipse);
-    });
-  };
 
-  const buildCustomSizes = (data) => {
-    customSizeOptions.innerHTML = '';
-    customSizeValueEl.textContent = 'Choose your size';
-    customSizeHidden.value = '';
+    /* SIZE OPTIONS BUILDER */
+    function buildSizes(data) {
+      sizeOptions.innerHTML = '';
+      sizeValueEl.textContent = 'Choose your size';
+      sizeHidden.value = '';
+      currentProduct.size = '';
 
-    const sizes = data && data.trim()
-      ? data.split(',').map((s) => s.trim()).filter(Boolean)
-      : customDefaultSizes;
+      var sizes = data && data.trim()
+        ? data.split(',').map(function (s) { return s.trim(); }).filter(Boolean)
+        : DEFAULT_SIZES;
 
-    sizes.forEach((s) => {
-      const li = document.createElement('li');
-      li.textContent = s;
-      li.dataset.value = s;
-      li.addEventListener('click', () => {
-        customSizeValueEl.textContent = s;
-        customSizeHidden.value = s;
-        customSizeOptions.querySelectorAll('li').forEach((item) => item.classList.remove('custom-selected'));
-        li.classList.add('custom-selected');
-        closeCustomDropdown();
-        customSizeHidden.dispatchEvent(new Event('change', { bubbles: true }));
+      sizes.forEach(function (s) {
+        var li = document.createElement('li');
+        li.textContent = s;
+        li.dataset.value = s;
+
+        li.addEventListener('click', function () {
+          sizeValueEl.textContent = s;
+          sizeHidden.value = s;
+          currentProduct.size = s;
+          sizeOptions.querySelectorAll('li').forEach(function (item) {
+            item.classList.remove('custom-selected');
+          });
+          li.classList.add('custom-selected');
+          closeSizeDropdown();
+        });
+
+        sizeOptions.appendChild(li);
       });
-      customSizeOptions.appendChild(li);
-    });
-  };
-
-  function openCustomDropdown() {
-    customSizeOptions.classList.add('custom-open');
-    customSizeCaret.classList.add('custom-open');
-  }
-
-  function closeCustomDropdown() {
-    customSizeOptions.classList.remove('custom-open');
-    customSizeCaret.classList.remove('custom-open');
-  }
-
-  customSizeTrigger.addEventListener('click', (e) => {
-    e.stopPropagation();
-
-    if (customSizeOptions.classList.contains('custom-open')) {
-      closeCustomDropdown();
-      return;
     }
 
-    if (customSizeHidden.value) {
-      customSizeHidden.value = '';
-      customSizeValueEl.textContent = 'Choose your size';
-      customSizeOptions.querySelectorAll('li').forEach((item) => item.classList.remove('custom-selected'));
-      customSizeHidden.dispatchEvent(new Event('change', { bubbles: true }));
+
+    /*  SIZE DROPDOWN TOGGLE */
+    function openSizeDropdown() {
+      sizeOptions.classList.add('custom-open');
+      sizeCaret.classList.add('custom-open');
     }
 
-    openCustomDropdown();
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!customSizeWrapper.contains(e.target)) closeCustomDropdown();
-  });
-
-   const openCustomModal = (card) => {
-    if (!card) return;
-
-    document.getElementById('customModalProductTitle').textContent = card.dataset.productName || 'Product';
-    document.getElementById('customModalProductPrice').textContent = card.dataset.productPrice || '';
-    document.getElementById('customModalProductDescription').textContent = card.dataset.productDescription || '';
-
-    const img = card.querySelector('.product-card-image');
-    if (img) document.getElementById('customModalProductImage').src = img.src;
-
-    buildCustomColors(card.dataset.productColors);
-    buildCustomSizes(card.dataset.productSizes);
-
-    customSizeCaret.classList.remove('custom-open');
-
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    if (scrollbarWidth > 0) {
-      document.body.style.paddingRight = scrollbarWidth + 'px';
+    function closeSizeDropdown() {
+      sizeOptions.classList.remove('custom-open');
+      sizeCaret.classList.remove('custom-open');
     }
 
-    customModal.classList.add('custom-active');
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeCustomModal = () => {
-    customModal.classList.remove('custom-active');
-    document.body.style.overflow = '';
-    document.body.style.paddingRight = '';
-    document.documentElement.style.overflow = '';
-  };
-
-  const initCustomModal = () => {
-    customCloseBtn.addEventListener('click', closeCustomModal);
-    customOverlay.addEventListener('click', closeCustomModal);
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeCustomModal();
-    });
-
-    document.addEventListener('click', (e) => {
-      const trigger = e.target.closest('[data-product-modal-trigger]');
-      if (trigger) {
-        e.preventDefault();
-        e.stopPropagation();
-        openCustomModal(trigger.closest('.product-card'));
+    sizeTrigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (sizeOptions.classList.contains('custom-open')) {
+        closeSizeDropdown();
+      } else {
+        openSizeDropdown();
       }
     });
-  };
 
-  document.addEventListener('DOMContentLoaded', initCustomModal);
+    document.addEventListener('click', function (e) {
+      if (!sizeWrapper.contains(e.target)) closeSizeDropdown();
+    });
+
+
+    /* VARIANT MATCHING */
+    function findVariantId(variants, color, size) {
+      if (!variants || !variants.length) return null;
+
+      /* Try exact match on option1 + option2 (any order) */
+      var match = variants.find(function (v) {
+        var opts = [
+          (v.option1 || '').toLowerCase(),
+          (v.option2 || '').toLowerCase(),
+          (v.option3 || '').toLowerCase()
+        ];
+        var cMatch = !color || opts.indexOf(color.toLowerCase()) !== -1;
+        var sMatch = !size  || opts.indexOf(size.toLowerCase())  !== -1;
+        return cMatch && sMatch && v.available;
+      });
+
+      if (match) return match.id;
+
+      /* Fallback: match colour only */
+      if (color) {
+        match = variants.find(function (v) {
+          var opts = [
+            (v.option1 || '').toLowerCase(),
+            (v.option2 || '').toLowerCase(),
+            (v.option3 || '').toLowerCase()
+          ];
+          return opts.indexOf(color.toLowerCase()) !== -1 && v.available;
+        });
+        if (match) return match.id;
+      }
+
+      /* Fallback: match size only */
+      if (size) {
+        match = variants.find(function (v) {
+          var opts = [
+            (v.option1 || '').toLowerCase(),
+            (v.option2 || '').toLowerCase(),
+            (v.option3 || '').toLowerCase()
+          ];
+          return opts.indexOf(size.toLowerCase()) !== -1 && v.available;
+        });
+        if (match) return match.id;
+      }
+
+      /* Last resort: first available variant */
+      var available = variants.find(function (v) { return v.available; });
+      return available ? available.id : variants[0].id;
+    }
+
+
+    /* CART API HELPERS */
+    function addToCart(items) {
+      return fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: items })
+      })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Cart error: ' + res.status);
+        return res.json();
+      });
+    }
+
+    function fetchProduct(handle) {
+      return fetch('/products/' + handle + '.js')
+        .then(function (res) {
+          if (!res.ok) throw new Error('Product not found: ' + handle);
+          return res.json();
+        });
+    }
+
+
+    /* BUTTON STATE HELPERS */
+    var btnText = addToCartBtn.querySelector('.custom-btn-text');
+
+    function setBtnLoading() {
+      addToCartBtn.disabled = true;
+      addToCartBtn.style.opacity = '0.6';
+      btnText.textContent = 'ADDING...';
+    }
+
+    function setBtnSuccess() {
+      addToCartBtn.style.opacity = '1';
+      btnText.textContent = '✓ ADDED!';
+      setTimeout(function () {
+        addToCartBtn.disabled = false;
+        btnText.textContent = 'ADD TO CART';
+      }, 2000);
+    }
+
+    function setBtnError(msg) {
+      addToCartBtn.style.opacity = '1';
+      btnText.textContent = msg || 'ERROR';
+      setTimeout(function () {
+        addToCartBtn.disabled = false;
+        btnText.textContent = 'ADD TO CART';
+      }, 2500);
+    }
+
+
+    /*  ADD TO CART HANDLER */
+    addToCartBtn.addEventListener('click', function () {
+      var color = currentProduct.color;
+      var size  = currentProduct.size;
+
+      /* Validation  */
+      var hasColors = colorWrapper.style.display !== 'none';
+      var hasSizes  = sizeOptions.children.length > 0;
+
+      if (hasColors && !color) {
+        alert('Please select a colour.');
+        return;
+      }
+      if (hasSizes && !size) {
+        alert('Please select a size.');
+        return;
+      }
+
+      /*  Find matching variant  */
+      var variantId = findVariantId(currentProduct.variants, color, size);
+      if (!variantId) {
+        setBtnError('UNAVAILABLE');
+        return;
+      }
+
+      /*  Build cart items  */
+      setBtnLoading();
+
+      var items = [{ id: variantId, quantity: 1 }];
+
+      /*  Check auto-add rule: Black + Medium  */
+      var triggerColor = autoAdd.color.toLowerCase();
+      var triggerSize  = autoAdd.size.toLowerCase();
+      var needsAutoAdd = (
+        autoAdd.handle &&
+        color && color.toLowerCase() === triggerColor &&
+        size  && size.toLowerCase()  === triggerSize
+      );
+
+      if (needsAutoAdd) {
+        /*  find its first available variant, then add both */
+        fetchProduct(autoAdd.handle)
+          .then(function (product) {
+            var autoVariant = product.variants.find(function (v) { return v.available; });
+            if (autoVariant) {
+              items.push({ id: autoVariant.id, quantity: 1 });
+            }
+            return addToCart(items);
+          })
+          .then(function () {
+            setBtnSuccess();
+          })
+          .catch(function (err) {
+            console.error('Auto-add error:', err);
+            addToCart([{ id: variantId, quantity: 1 }])
+              .then(function () { setBtnSuccess(); })
+              .catch(function () { setBtnError('FAILED'); });
+          });
+      } else {
+        /* Standard add  just the selected product */
+        addToCart(items)
+          .then(function () {
+            setBtnSuccess();
+          })
+          .catch(function (err) {
+            console.error('Add to cart error:', err);
+            setBtnError('FAILED');
+          });
+      }
+    });
+
+
+    /*  MODAL OPEN / CLOSE */
+    function openModal(card) {
+      if (!card) return;
+
+      /*  Populate text content  */
+      document.getElementById('customModalProductTitle').textContent =
+        card.dataset.productName || 'Product';
+      document.getElementById('customModalProductPrice').textContent =
+        card.dataset.productPrice || '';
+      document.getElementById('customModalProductDescription').textContent =
+        card.dataset.productDescription || '';
+
+      /*  Populate image  */
+      var img = card.querySelector('.product-card-image');
+      if (img) {
+        document.getElementById('customModalProductImage').src = img.src;
+      }
+
+      /*  Store product data for Add to Cart  */
+      currentProduct.handle = card.dataset.productHandle || '';
+
+      try {
+        currentProduct.variants = JSON.parse(card.dataset.productVariants || '[]');
+      } catch (e) {
+        currentProduct.variants = [];
+        console.error('Failed to parse variants:', e);
+      }
+
+      /*  Build option selectors  */
+      buildColors(card.dataset.productColors);
+      buildSizes(card.dataset.productSizes);
+
+      /*  Reset state  */
+      currentProduct.color = '';
+      currentProduct.size  = '';
+      sizeCaret.classList.remove('custom-open');
+      btnText.textContent = 'ADD TO CART';
+      addToCartBtn.disabled = false;
+      addToCartBtn.style.opacity = '1';
+
+      /*  Lock scroll & show modal  */
+      var scrollbarW = window.innerWidth - document.documentElement.clientWidth;
+      if (scrollbarW > 0) document.body.style.paddingRight = scrollbarW + 'px';
+
+      modal.classList.add('custom-active');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('custom-active');
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      document.documentElement.style.overflow = '';
+    }
+
+
+    /*INITIALISE EVENT LISTENERS */
+    function init() {
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', closeModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      document.addEventListener('click', function (e) {
+        var trigger = e.target.closest('[data-product-modal-trigger]');
+        if (trigger) {
+          e.preventDefault();
+          e.stopPropagation();
+          openModal(trigger.closest('.product-card'));
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  })();
 </script>
 
 {% schema %}
 {
   "name": "Custom Product Modal",
-  "settings": [],
+  "settings": [
+    {
+      "type": "header",
+      "content": "── Auto-Add Rule ──"
+    },
+    {
+      "type": "paragraph",
+      "content": "When a product with Color = Black and Size = Medium is added, the product below is automatically added to the cart too."
+    },
+    {
+      "type": "product",
+      "id": "auto_add_product",
+      "label": "Auto-Add Product",
+      "info": "Select 'Soft Winter Jacket' or any product to auto-add."
+    },
+    {
+      "type": "text",
+      "id": "auto_add_color",
+      "label": "Trigger Colour",
+      "default": "Black"
+    },
+    {
+      "type": "text",
+      "id": "auto_add_size",
+      "label": "Trigger Size",
+      "default": "Medium"
+    }
+  ],
   "presets": [{ "name": "Custom Product Modal" }]
 }
 {% endschema %}
