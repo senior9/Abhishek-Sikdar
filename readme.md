@@ -27,11 +27,11 @@ All files live in the `sections/` folder and are searchable in the Shopify Theme
 
 ```
 ├── sections/
-│   ├── custom-announcement-bar.liquid   ✨
-│   ├── static-announcement-bar.liquid   ✨
-│   ├── gift-guide-hero.liquid           ✨
-│   ├── custom-featured-products.liquid  ✨
-│   └── custom-product-modal.liquid      ✨
+│   ├── custom-announcement-bar.liquid   
+│   ├── static-announcement-bar.liquid   
+│   ├── gift-guide-hero.liquid           
+│   ├── custom-featured-products.liquid  
+│   └── custom-product-modal.liquid      
 ├── assets/
 ├── config/
 ├── snippets/
@@ -40,7 +40,7 @@ All files live in the `sections/` folder and are searchable in the Shopify Theme
 
 ---
 
-## ⚙️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |-------|------------|
@@ -53,7 +53,7 @@ All files live in the `sections/` folder and are searchable in the Shopify Theme
 
 ---
 
-## ✨ Features
+##  Features
 
 - ✅ Fully responsive — Desktop → Tablet → Mobile
 - ✅ All content editable via Theme Customiser (no code changes needed)
@@ -103,7 +103,7 @@ POST /cart/add.js
 
 ---
 
-## 🧠 Notable Solutions
+##  Notable Solutions
 
 <details>
 <summary><strong>Button text disappearing on hover</strong></summary>
@@ -149,7 +149,7 @@ Schema product picker selects the auto-add item. JS checks the colour + size mat
 
 ---
 
-## 🚀 Setup
+##  Setup
 
 ```bash
 # Clone the repo
@@ -175,7 +175,7 @@ Then open a **Pull Request**: `development → master` and connect the branch to
 
 ---
 
-## 📚 Key Concepts Used
+##  Key Concepts Used
 
 - **Section architecture** — each file is self-contained (HTML + CSS + JS + Schema)
 - **Scoped styles** via `#shopify-section-{{ section.id }}`
@@ -186,4 +186,4 @@ Then open a **Pull Request**: `development → master` and connect the branch to
 
 ---
 
-<p align="center">Built with ☕ and vanilla JavaScript · No jQuery was harmed.</p>
+<p align="center">Built with  and vanilla JavaScript · No jQuery was harmed.</p>
